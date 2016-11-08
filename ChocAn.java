@@ -3,7 +3,7 @@ public class ChocAn{
 	public static void main(String[] argv){
         //Manager manager = new Manager();
         
-        DataCenter dataCenter = new DataCenter();
+        DataAccess dataAccess = new DataAccess();
 
 
 

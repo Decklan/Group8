@@ -1,10 +1,10 @@
 import java.sql.*;
 
-class DataCenter{
+class DataAccess{
 
 	private static Connection connection = null;
 
-    DataCenter() {
+    DataAccess() {
         connectDatabase();
     }
 
