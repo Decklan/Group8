@@ -1,13 +1,18 @@
 public class ChocAn{
 
 	public static void main(String[] argv){
+        //Manager manager = new Manager();
         
         DataCenter dataCenter = new DataCenter();
 
+
+
+/*  Code no longer work due to the changed of database. Use these as example.
         System.out.println("\nloooking up id 1123132....");
         if(dataCenter.verifyUser(1123132) == null) {
             System.out.println("Invalid ID number");
         }
+
 
         System.out.print("\n\n\n\n\n");
     
@@ -18,16 +23,10 @@ public class ChocAn{
 
         System.out.print("\n\n\n\n\n");
 
-        System.out.println("Displaying all members");
-        dataCenter.displayAllUser();
-        //dataCenter.addUser(3, "Mike", "100");
-        
-
-        System.out.print("\n\n\n\n\n");
-
         System.out.println("provider directory look up...");
         dataCenter.directoryLookUp();
         //dataCenter.addUser(3, "Mike", "100");
+*/
 
 	}
 }
