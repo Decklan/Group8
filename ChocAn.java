@@ -1,8 +1,8 @@
 public class ChocAn{
 
 	public static void main(String[] argv){
-        //Manager manager = new Manager();
-        
+        Manager manager = new Manager();
+        Provider provider = new Provider();
         DataAccess dataAccess = new DataAccess();
 
 

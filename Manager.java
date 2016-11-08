@@ -1,7 +1,7 @@
-class Manager{
+class Manager extends Terminal{
 
-    Manager() {
-
+    Manager(int id) {
+        super(id);
     }
 
 }
