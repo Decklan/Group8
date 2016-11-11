@@ -28,6 +28,24 @@ class DataAccess{
 		}
     }
 
+    public static String userVerification(int userID) {
+        String query = "SELECT * FROM organization WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userID); 
+            ResultSet results = preparedStatement.executeQuery();
+
+            if(results.next()) {
+                String status = results.getString("status");
+                return status;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return "invalid";
+    }
+
 /* Code no longer work due to the changed of the database. Use for examples
     public String verifyUser(int userId) {
 
