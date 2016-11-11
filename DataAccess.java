@@ -73,6 +73,42 @@ class DataAccess{
         return false;
     }
 
+	public String directoryLookUp() {
+        String query = "SELECT * FROM Provider_directory";
+        StringBuilder directory = new StringBuilder();
+		try{
+	        Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
+			boolean status = stmt.execute(query);
+
+			if(status){
+                //Get the result from query. This does not contains columns name.
+	            ResultSet results = stmt.getResultSet();
+
+                //We're using reseultSetMeta to get the columns name
+	            ResultSetMetaData meta = results.getMetaData();
+
+                //print columns name
+				int columns = meta.getColumnCount();
+				for(int i = 1; i <= columns; i++){
+                    directory.append(meta.getColumnLabel(i) + " | ");
+				}
+                directory.append("\n");
+
+				while(results.next()){
+					for(int i = 1; i<= columns; i++){
+						directory.append(results.getObject(i) + " | ");
+					}
+                    directory.append("\n");
+				}
+			}
+            return directory.toString();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+        return null;
+	}
+
 
 /* Code no longer work due to the changed of the database. Use for examples
     public String verifyUser(int userId) {
@@ -138,42 +174,6 @@ class DataAccess{
 
 
     //this case is a little bit more advance. We're going to print out all of the data and including the columnds name.
-	public static void directoryLookUp() {
-        String query = "SELECT * FROM Provider_directory";
-		try{
-	        Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-
-            //execute the query, return true or false if it contaisn data
-			boolean status = stmt.execute(query);
-
-			if(status){
-                //Get the result from query. This does not contains columns name.
-	            ResultSet results = stmt.getResultSet();
-
-                //We're using reseultSetMeta to get the columns name
-	            ResultSetMetaData meta = results.getMetaData();
-
-                //print columns name
-				int columns = meta.getColumnCount();
-				for(int i = 1; i <= columns; i++){
-					String columnName = meta.getColumnLabel(i);
-					System.out.print(columnName + " ");
-				}
-				System.out.println();
-
-                //print data
-				while(results.next()){
-					for(int i = 1; i<= columns; i++){
-						Object val = results.getObject(i);
-						System.out.print(val + " ");
-					}
-					System.out.println();
-				}
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
 */
 }
 
