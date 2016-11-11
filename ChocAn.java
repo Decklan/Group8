@@ -1,10 +1,14 @@
 public class ChocAn{
 
 	public static void main(String[] argv){
-        Manager manager = new Manager();
-        Provider provider = new Provider();
         DataAccess dataAccess = new DataAccess();
 
+        System.out.println(DataAccess.userVerification(123213));
+        System.out.println(DataAccess.userVerification(768921693));
+        System.out.println(DataAccess.userVerification(587857871));
+        System.out.println(DataAccess.userVerification(454419772));
+        System.out.println(DataAccess.userVerification(433671813));
+    
 
 
 /*  Code no longer work due to the changed of database. Use these as example.

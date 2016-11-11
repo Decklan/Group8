@@ -1,7 +1,7 @@
-class Provider extends Terminal{
+public class Provider extends User{
 
     Provider(int id) {
-        super(id)
+        super(id);
     }
 
 }

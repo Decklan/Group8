@@ -1,4 +1,4 @@
-class Manager extends Terminal{
+public class Manager extends User{
 
     Manager(int id) {
         super(id);
