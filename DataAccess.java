@@ -28,6 +28,7 @@ class DataAccess{
 		}
     }
 
+    //Return "invalid", "provider", member", "suspended", "manager"
     public static String userVerification(int userID) {
         String query = "SELECT * FROM organization WHERE id = ?";
 
