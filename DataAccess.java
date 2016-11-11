@@ -47,6 +47,33 @@ class DataAccess{
         return "invalid";
     }
 
+    public boolean addOrganization(int userID, String name, String street, 
+                                   String city, String state, int zipcode, String status) {
+        String query = "INSERT INTO organization (id, name, streetaddress, city, state, zipcode, status)"
+                        +" VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userID); 
+            preparedStatement.setString(2, name); 
+            preparedStatement.setString(3, street); 
+            preparedStatement.setString(4, city); 
+            preparedStatement.setString(5, state); 
+            preparedStatement.setInt(6, zipcode); 
+            preparedStatement.setString(7, status); 
+
+            preparedStatement.executeUpdate();
+            System.out.println("Successfully added a new member");
+            return true;
+
+        } catch(SQLException e) {
+            System.out.println("Fail adding new member");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 /* Code no longer work due to the changed of the database. Use for examples
     public String verifyUser(int userId) {
 
