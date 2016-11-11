@@ -1,7 +1,7 @@
-class Terminal{
+class User{
     protected int userID;
 
-    Terminal(int id) {
+    User(int id) {
         this.userID = id;
     }
 
