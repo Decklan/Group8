@@ -1,6 +1,6 @@
 import java.sql.*;
 
-class DataAccess{
+public class DataAccess{
 
 	private static Connection connection = null;
 
@@ -8,7 +8,7 @@ class DataAccess{
         connectDatabase();
     }
 
-    private void connectDatabase() {
+    private static void connectDatabase() {
 
 		//This will check if there's postgresql driver is included when compile
 		try{
@@ -30,6 +30,7 @@ class DataAccess{
 
     //Return "invalid", "provider", member", "suspended", "manager"
     public static String userVerification(int userID) {
+        connectDatabase();
         String query = "SELECT * FROM organization WHERE id = ?";
 
         try {
