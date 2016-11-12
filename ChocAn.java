@@ -3,6 +3,7 @@ public class ChocAn{
 	public static void main(String[] argv){
 
         /*  TEST userverificaiton 
+        DataAccess dataAccess = new DataAccess();
         System.out.println(DataAccess.userVerification(123213));
         System.out.println(DataAccess.userVerification(768921693));
         System.out.println(DataAccess.userVerification(587857871));

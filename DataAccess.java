@@ -21,7 +21,7 @@ class DataAccess{
         //Connect to cecs.pdx.edu database. 
 		try{
 			connection = DriverManager.getConnection(
-				"jdbc:postgresql://db.cecs.pdx.edu:5432/cuonngo", "cuonngo", "p#n4rP9wpe");
+				"jdbc:postgresql://107.170.244.89:5432/datacenter", "datacenter", "thereisnopassword");
 		}catch(SQLException e){
             System.out.println("Unable to connect to database. Check credentials and host.");
             System.exit(1);
@@ -49,7 +49,7 @@ class DataAccess{
 
     public boolean addOrganization(int userID, String name, String street, 
                                    String city, String state, int zipcode, String status) {
-        String query = "INSERT INTO organization (id, name, streetaddress, city, state, zipcode, status)"
+        String query = "INSERT INTO organization (id, name, street, city, state, zipcode, status)"
                         +" VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
