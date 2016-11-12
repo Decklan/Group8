@@ -74,6 +74,29 @@ public class DataAccess{
         return false;
     }
 
+    public boolean createBill(int memberID, int providerID, int serviceID, int nuConsultation, Date provideddate, String comment) {
+        String query = "INSERT INTO report (memberid, providerid, serviceid, numberconsultation, provideddate, comment)"
+                        + " VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID); 
+            preparedStatement.setInt(2, providerID); 
+            preparedStatement.setInt(3, serviceID); 
+            preparedStatement.setInt(4, nuConsultation); 
+            preparedStatement.setDate(5, provideddate); 
+            preparedStatement.setString(6, comment); 
+
+            preparedStatement.executeUpdate();
+            System.out.println("Successfully added a report");
+            return true;
+
+        } catch(SQLException e) {
+            System.out.println("Fail adding report");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 	public String directoryLookUp() {
         String query = "SELECT * FROM Provider_directory";
         StringBuilder directory = new StringBuilder();
