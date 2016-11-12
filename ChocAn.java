@@ -117,12 +117,12 @@ public String userLogin() {
 
 	public static void main(String[] argv){
 
-		//Create new ChocAn client
+		/*Create new ChocAn client
 		ChocAn chocAnClient = new ChocAn();
 
 
 		chocAnClient.runChocAn();
-
+		*/	
 
 		/*Test login function
 		chocAnClient.loginTest();
