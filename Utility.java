@@ -37,15 +37,32 @@ public class Utility {
     /*Performs a check on the user's input to see if
         *they answered some form of "yes."
         * INPUT: NONE
-        * OUTPUT: True or False
+        * OUTPUT: 0 for no, 1 for yes, 2 for an invalid response
         */
-    public boolean checkAnswer() {
+    public int checkAnswer() {
 
         String temp = input.nextLine();  //Catches the user's input
+        int responseFlag;
 
-        //Returns the value of the string check (true or false).
-        return (temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("y"));
+        if (temp.equalsIgnoreCase("no") || temp.equalsIgnoreCase("n")) {
+            responseFlag = 0;
+        }
 
+        else if (temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("y")) {
+            responseFlag = 1;
+        }
+
+         else {
+            System.out.println("Not a valid response.");
+            responseFlag = 2;
+        }
+
+        return responseFlag;
+
+        /*  Error check not robust enough
+         * Returns the value of the string check (true or false).
+         * return (temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("y"));
+         */
     }
 
 
