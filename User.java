@@ -1,8 +1,15 @@
-public class User{
-    protected int userID;
+/**
+ * This class is the abstract base class for the manager/provider hierarchy.
+ */
 
-    User(int id) {
-        this.userID = id;
+public abstract class User {
+    protected int userID;            // holds provider/manager ID
+
+    User(int userID) {
+        this.userID = userID;
     }
+
+    abstract public void run();
+
 
 }

@@ -11,7 +11,8 @@ public class Main {
 
 
 
-        /* Test For dataacess role
+        // Test For dataacess role
+        /*
         DataAccess dataAccess = new DataAccess();
         System.out.println(dataAccess.directoryLookUp());
         System.out.println(dataAccess.getMemberBill(587857871));
