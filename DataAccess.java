@@ -111,13 +111,42 @@ public class DataAccess{
             while(results.next()) {
                 directory.append("\n");
                 directory.append("id: " + results.getInt("id") + "\n");
-                directory.append("id: " + results.getString("name") + "\n");
-                directory.append("id: " + results.getInt("fee") + "\n");
+                directory.append("name: " + results.getString("name") + "\n");
+                directory.append("fee: $" + results.getInt("fee") + "\n");
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
         return directory.toString();
 	}
-}
 
+    //query that will return member bill as a string
+    public String getMemberBill(int memberID) {
+        String query = "SELECT r.provideddate, r.providerid, o.name, r.memberid, r.serviceid, pd.fee, r.comment "+
+                        "FROM organization o JOIN report r ON o.id = r.memberid "+
+                        "JOIN provider_directory pd ON r.serviceid = pd.id WHERE r.memberid = ?";
+
+        StringBuilder directory = new StringBuilder();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID); 
+            ResultSet results = preparedStatement.executeQuery();
+
+            if(results.next()) {
+                directory.append("Date service was provided: " + 
+                                results.getDate("provideddate") + "\n");
+                directory.append("Provider number: " + 
+                                results.getInt("providerid") + "\n");
+                directory.append("Member name: " + results.getString("name") + "\n");
+                directory.append("Member number: " + results.getInt("memberid") + "\n");
+                directory.append("Service code: " + results.getInt("serviceid") + "\n");
+                directory.append("Fee to be paid: $" + results.getInt("fee") + "\n");
+                directory.append("Comments: " + results.getString("comment") + "\n");
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return directory.toString();
+    }
+}
