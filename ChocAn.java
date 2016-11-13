@@ -99,10 +99,15 @@ public class ChocAn extends Utility {
         System.out.println("++++ WELCOME ++++\n\n");
         userStatus = userLogin();
 
+        /*
+        Manager m = new Manager(123213);
+        m.run();
+        Provider p = new Provider(123213);
+        p.run();
+        */
+
         /*Test return value for userStatus
           System.out.println(userStatus);
           */
-
-
     }
 }

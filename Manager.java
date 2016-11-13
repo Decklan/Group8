@@ -1,18 +1,57 @@
 /**
- * This class contains all the methods and members that a Manager should contain
+ * This class contains all the Manager method should contain
  */
+
 public class Manager extends User {
 
-    // Constructor to instantiate Manager
-    public Manager(int ID, String title) {
-        super(ID, title); // Invoke base class constructor
+    public Manager(int userID) {
+        super(userID); 
     }
 
-    /*
-     * Implement abstract display function from the base class. We don't have to use
-     * this method for anything other than displaying for testing purposes.
-     */
-        System.out.println("Manager ID: " + userID);
-        System.out.println("Manager Title: " + userTitle);
+    //TODO
+    private boolean addMember() {
+    // check if id is 9 digits. validIDLength(int id)
+    //
+    // check if isIDTaken(int id)
+    //
+    // 
+    // Call dataAcess.addOrganization(int userID, String name, String street, 
+    //                  String city, String state, int zipcode,
+    //                  status='provider')
+    //
+        return true;
+    }
+
+    //TODO
+    private boolean addProvider() {
+    // check if id is 9 digits. validIDLength(int id)
+    //
+    // check if isIDTaken(int id)
+    //
+    // 
+    // Call dataAcess.addOrganization(int userID, String name, String street, 
+    //                  String city, String state, int zipcode,
+    //                  status='provider')
+    //
+        return true;
+    }
+
+    //TODO
+    private boolean validIDLength(int id) {
+        return true;
+    }
+    
+    //TODO
+    private boolean isIDTaken(int id) {
+    // Call dataAccess.userVerification(int userID)
+    // to check if userID is taken. we would want 'invalid' return
+        return true;
+    } 
+
+
+/*********  Driver  **********/
+    public void run() {
+        System.out.println("Manager driver");
+
     }
 }

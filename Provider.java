@@ -1,28 +1,31 @@
 /**
- * This class contains all the methods and members a provider should contain.
+ * This class contains all the provider methods should contain.
  */
+
 public class Provider extends User {
-    protected String firstName;     // Holds the providers first name
-    protected String lastName;      // Holds the providers last name
-    protected String address;       // Holds the providers address
-    // STILL MORE VARIABLES TO ADD TO THIS CLASS
+    private int memberID;
 
-    // Constructor to instantiate Provider
-    public Provider(int ID, String title, String first, String last, String addr) {
-        super(ID, title); // Invoke base class constructor
-        // Set all the additional variables in Provider not in the base class
-        this.firstName = first;
-        this.lastName = last;
-        this.address = addr;
+    public Provider(int userID) {
+        super(userID); 
     }
 
-    /*
-     * Implement abstract display function from the base class. We don't really need to use
-     * this method for anything other than displaying for testing purposes.
-     */
-        System.out.println("Provider ID: " + userID);
-        System.out.println("Provider Name: " + firstName + " " + lastName);
-        System.out.println("Provider Title: " + userTitle);
-        System.out.println("Provider Address: " + address);
+    //TODO
+    private void memberVerification() {
+        //Using a do-while loop? ask for member ID and then call
+        //dataAccess.userVerification(int id)
+        //if invalid, loop again. 
+        //do until return "member"
+        
+        //this.memberID = 
     }
+
+
+
+/*********  Driver  **********/
+    public void run() {
+        //memberVerification()
+        System.out.println("Provider driver");
+
+    }
+
 }
