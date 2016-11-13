@@ -44,119 +44,65 @@ public class ChocAn extends Utility {
 	/* Prompts the user to enter their ID number and calls on the
 	 * userVerification function to verify whether the user is a
 	 * Manager or Provider
-	 */
-public String userLogin() {
+     */
+    public String userLogin() {
 
-			//Boolean for loop control (true: continue false: break)
-			boolean again = true;
+        //Boolean for loop control (true: continue false: break)
+        boolean again = true;
 
-			do {
-				System.out.print("Please Enter Your ID Number:  ");
-				inputUserID = input.nextLine();
+        do {
+            System.out.print("Please Enter Your ID Number:  ");
+            inputUserID = input.nextLine();
 
-				//Test that the user's input is an integer.
-				if (testIntegerInput(inputUserID)) {
-					userIDisInteger = Integer.parseInt(inputUserID);
+            //Test that the user's input is an integer.
+            if (testIntegerInput(inputUserID)) {
+                userIDisInteger = Integer.parseInt(inputUserID);
 
-					/*Testing output
-					System.out.println(DataAccess.userVerification(userIDisInteger));
-                    */
+                /*Testing output
+                  System.out.println(DataAccess.userVerification(userIDisInteger));
+                  */
 
-					checkUserStatus = DataAccess.userVerification(userIDisInteger);
+                checkUserStatus = DataAccess.userVerification(userIDisInteger);
 
-						/* If the number is an integer & the user enters an invalid ID number or by chance
-						 * enters a member's ID number, they must be denied by the system and informed that
-						 * the number they have entered will not gain them access to the system.
-						 */
-					if(checkUserStatus.equalsIgnoreCase("invalid") || checkUserStatus.equalsIgnoreCase("suspended")
+                /* If the number is an integer & the user enters an invalid ID number or by chance
+                 * enters a member's ID number, they must be denied by the system and informed that
+                 * the number they have entered will not gain them access to the system.
+                 */
+                if(checkUserStatus.equalsIgnoreCase("invalid") || checkUserStatus.equalsIgnoreCase("suspended")
                         || checkUserStatus.equalsIgnoreCase("valid"))
-						System.out.println("This is not a registered access ID in the system.");
-				}
+                    System.out.println("This is not a registered access ID in the system.");
+            }
 
-				else {
-					checkUserStatus = "invalid";
-				}
+            else {
+                checkUserStatus = "invalid";
+            }
 
-				//If the user's input is invalid, allow them to enter their information again
-				if (checkUserStatus.equalsIgnoreCase("invalid")){
-					System.out.print("Would you like to try again? [y/n]:  ");
-					again = checkAnswer();
-				}
+            //If the user's input is invalid, allow them to enter their information again
+            if (checkUserStatus.equalsIgnoreCase("invalid")){
+                System.out.print("Would you like to try again? [y/n]:  ");
+                again = checkAnswer();
+            }
 
-				else{
-					again = false;
-				}
+            else{
+                again = false;
+            }
 
-				}while(again);
+        }while(again);
 
-			return checkUserStatus;
-	}
-
-
-	public void runChocAn (){
-
-    //Prompt the User for their password
-    System.out.println("++++ WELCOME ++++\n\n");
-	userStatus = userLogin();
-
-    /*Test return value for userStatus
-    System.out.println(userStatus);
-    */
+        return checkUserStatus;
+    }
 
 
-	}
+    public void runChocAn (){
+
+        //Prompt the User for their password
+        System.out.println("++++ WELCOME ++++\n\n");
+        userStatus = userLogin();
+
+        /*Test return value for userStatus
+          System.out.println(userStatus);
+          */
 
 
-
-
-
-
-
-
-
-
-	public static void main(String[] argv){
-
-		/*Create new ChocAn client
-		ChocAn chocAnClient = new ChocAn();
-
-
-		chocAnClient.runChocAn();
-		*/	
-
-		/*Test login function
-		chocAnClient.loginTest();
-		*/
-
-
-
-
-
-
-
-
-
-		/*
-         TEST userverificaiton
-        System.out.println(DataAccess.userVerification(123213));
-        System.out.println(DataAccess.userVerification(768921693));
-        System.out.println(DataAccess.userVerification(587857871));
-        System.out.println(DataAccess.userVerification(454419772));
-        System.out.println(DataAccess.userVerification(433671813));
-		*/
-
-        /* TEST addingOrganization
-        DataAccess dataAccess = new DataAccess();
-        boolean a = dataAccess.addOrganization(274419773, "Mike Brown" , "3992 Highland Drive",
-                                   "Milwaukee", "WI", 53202, "member");
-        */
-
-        /* TEST Directory LOOK UP
-        DataAccess dataAccess = new DataAccess();
-        String directory = dataAccess.directoryLookUp();
-        System.out.println(directory);
-        */
-        
-
-	}
+    }
 }
