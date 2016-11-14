@@ -1,5 +1,6 @@
 /**
- * This class is the abstract base class for the manager/provider hierarchy.
+ * This class is the abstract base class for the manager/provider hierarchy. The run
+ * function acts as the menu for the provider/manager that gets allocated.
  */
 
 public abstract class User extends Utility {

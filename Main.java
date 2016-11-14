@@ -7,9 +7,8 @@ public class Main {
         //Create a new ChocAn object to run
         //ChocAn chocAnTerminal = new ChocAn();
         //chocAnTerminal.runChocAn();
-        Manager testManager = new Manager(987654321);
-        boolean validLength = testManager.validIDLength(987654321);
-        //testManager.addProvider();
+        //User testManager = new Manager(987654321);
+        //testManager.run();
 
 
 
