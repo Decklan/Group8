@@ -1,13 +1,15 @@
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args){
 
         //Create a new ChocAn object to run
-        ChocAn chocAnTerminal = new ChocAn();
-        chocAnTerminal.runChocAn();
-
-
-
+        //ChocAn chocAnTerminal = new ChocAn();
+        //chocAnTerminal.runChocAn();
+        Manager testManager = new Manager(987654321);
+        boolean validLength = testManager.validIDLength(987654321);
+        //testManager.addProvider();
 
 
 
