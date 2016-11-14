@@ -4,12 +4,13 @@
 
 public abstract class User extends Utility {
     protected int userID;            // holds provider/manager ID
+    protected DataAccess data;       // Data variable for communication with the database
 
     User(int userID) {
-        this.userID = userID;
+        super();                     // Call base Utility class constructor
+        this.userID = userID;        // Set the userID
+        data = new DataAccess();     // Allocate the data access object
     }
 
-    abstract public void run();
-
-
+    public abstract void run();
 }

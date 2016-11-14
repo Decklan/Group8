@@ -6,7 +6,7 @@ public class Provider extends User {
     private int memberID;
 
     public Provider(int userID) {
-        super(userID); 
+        super(userID);
     }
 
     //TODO
