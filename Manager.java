@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Manager extends User {
 
+    // Constructor that initializes Manager by invoking base class constructor
     public Manager(int userID) {
         super(userID); 
     }
@@ -144,7 +145,9 @@ public class Manager extends User {
 
 
 /*********  Driver  **********/
+    // This function is used as the menu function when a manager is allocated
     public void run() {
+
         System.out.println("Manager driver");
     }
 }
