@@ -24,16 +24,32 @@ public class Provider extends User {
 		
     }
     
-    //TODO
-    //NOTE: Try and use the promptID function
-    private void memberVerification() {
-        //Using a do-while loop? ask for member ID and then call
-        //dataAccess.userVerification(int id)
-        //if invalid, loop again. 
-        //do until return "member"
-        
-        //this.memberID = 
+    
+/**
+ *Input : memberName to verify status
+ *Output: True for member and false for suspended
+ *This function calls propptID method and prints the status if the member
+*/
+    public boolean memberVerification(String memberName) {
+	String memberType;
+	DataAccess dataAccess = new DataAccess();
+	try{
+		do{
+	   	      //System.out.print("Please Enter Member ID Number: ");
+	   	      memberID = this.promptID(memberName, 9); 
+	   	      memberType = dataAccess.userVerification(memberID);//returns member, provider, manager or suspended 
+		      System.out.print("Member Status : " + memberType + "\n");//for testing
+		      if(memberType.equals("suspended"))//member is suspended
+		         return false;
+	   	  }while(!memberType.equals("member"));
+	   }
+	catch (NumberFormatException ex){
+	   System.out.println("Unable to verify member. Try Again.");
+	}
+	return true;	
     }
+
+
 
     /*Name: promptID, Input: String, int Output: int
     Description: Prompts for an ID and returns a valid reponse.
