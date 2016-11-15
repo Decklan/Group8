@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class DataAccess{
 
-	private static Connection connection = null;
+    private static Connection connection = null;
 
     DataAccess() {
         connectDatabase();
@@ -10,22 +10,22 @@ public class DataAccess{
 
     private static void connectDatabase() {
 
-		//Check if there's postgresql driver is included when compile
-		try{
-			Class.forName("org.postgresql.Driver");
-		}catch(ClassNotFoundException e){
-			e.printStackTrace();
-			return;
-		}
+        //Check if there's postgresql driver is included when compile
+        try{
+            Class.forName("org.postgresql.Driver");
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+            return;
+        }
 
         //Connect to database
-		try{
-			connection = DriverManager.getConnection(
-				"jdbc:postgresql://107.170.244.89:5432/datacenter", "datacenter", "thereisnopassword");
-		}catch(SQLException e){
+        try{
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://107.170.244.89:5432/datacenter", "datacenter", "thereisnopassword");
+        }catch(SQLException e){
             System.out.println("Unable to connect to database. Check credentials and host.");
             System.exit(1);
-		}
+        }
     }
 
     //Return "invalid", "provider", member", "suspended", "manager"
