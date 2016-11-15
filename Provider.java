@@ -19,12 +19,27 @@ public class Provider extends User {
         //this.memberID = 
     }
 
+    //This method displays the Provider Directory.
+    ////The directory stores service names, service codes, and service fees.
+    public void providerDirectoryDisplay() {
+        String providerDirectory = data.directoryLookUp();
+
+        if(providerDirectory != null) {
+            System.out.println(providerDirectory);
+        }
+        else {
+            System.out.println("Provider Directory Is Empty");
+        }
+
+    }
+
 
 
 /*********  Driver  **********/
     public void run() {
         //memberVerification()
         System.out.println("Provider driver");
+        //providerDirectoryDisplay();
 
     }
 
