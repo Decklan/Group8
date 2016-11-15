@@ -48,6 +48,23 @@ public class DataAccess{
         return "invalid";
     }
 
+    public boolean serviceVerification(int serviceID) {
+        String query = "SELECT * FROM provider_directory WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, serviceID); 
+            ResultSet results = preparedStatement.executeQuery();
+
+            if(results.next())
+                return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     //Query that will add a new member or provider
     public boolean addOrganization(int userID, String name, String street, 
                                    String city, String state, int zipcode, String status) {
