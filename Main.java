@@ -11,6 +11,11 @@ public class Main {
         //User testManager = new Manager(987654321);
         //testManager.run();
 
+        //Test adding member and provider
+        //Manager testManager = new Manager(987654321);
+        //testManager.addMember();
+        //testManager.addProvider();
+        
 
 
         // Test For dataacess role

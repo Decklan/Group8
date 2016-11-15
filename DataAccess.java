@@ -65,7 +65,7 @@ public class DataAccess{
             preparedStatement.setString(7, status); 
 
             preparedStatement.executeUpdate();
-            System.out.println("Successfully added a new member");
+            System.out.println("Successfully added a new " + status);
             return true;
 
         } catch(SQLException e) {
