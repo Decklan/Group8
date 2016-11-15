@@ -64,6 +64,34 @@ public class DataAccess{
         return false;
     }
 
+    public boolean suspendMember(int memberID) {
+        String query = "UPDATE organization set status = 'suspended' where id= ? and status = 'member'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID); 
+            preparedStatement.executeUpdate();
+
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean unsuspendMember(int memberID) {
+        String query = "UPDATE organization set status = 'member' where id= ? and status = 'suspended'";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID); 
+            preparedStatement.executeUpdate();
+
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     //Query that will add a new member or provider
     public boolean addOrganization(int userID, String name, String street, 
