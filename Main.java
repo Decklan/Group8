@@ -14,7 +14,10 @@ public class Main {
         //Test adding member and provider
         //Manager testManager = new Manager(987654321);
         //testManager.addMember();
-        //testManager.addProvider();
+        //
+        //
+        //Provider p = new Provider(768921693);
+        //p.createBill();
         
 
 
