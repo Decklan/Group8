@@ -26,16 +26,16 @@ public class Provider extends User {
     
     
 /**
- *Input : memberName to verify status
+ *Input : memberID number to verify status
  *Output: True for member and false for suspended
- *This function calls propptID method and prints the status if the member
+ *This function will also set memberID to verifyMember if the user is a member
 */
     public boolean memberVerification(int verifyMember) {
 	String memberType;
 	boolean status = false;
 	try{	
 	      memberType = data.userVerification(verifyMember);//returns member, provider, manager or suspended 
-	      if(memberType.equals("member")){//member is suspended
+	      if(memberType.equals("member")){
 	         status = true;
 	         memberID = verifyMember;
 	      }
