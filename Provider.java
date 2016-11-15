@@ -30,23 +30,23 @@ public class Provider extends User {
  *Output: True for member and false for suspended
  *This function calls propptID method and prints the status if the member
 */
-    public boolean memberVerification(String memberName) {
+    public boolean memberVerification(int verifyMember) {
 	String memberType;
-	DataAccess dataAccess = new DataAccess();
-	try{
-		do{
-	   	      //System.out.print("Please Enter Member ID Number: ");
-	   	      memberID = this.promptID(memberName, 9); 
-	   	      memberType = dataAccess.userVerification(memberID);//returns member, provider, manager or suspended 
-		      System.out.print("Member Status : " + memberType + "\n");//for testing
-		      if(memberType.equals("suspended"))//member is suspended
-		         return false;
-	   	  }while(!memberType.equals("member"));
+	boolean status = false;
+	try{	
+	      memberType = data.userVerification(verifyMember);//returns member, provider, manager or suspended 
+	      if(memberType.equals("member")){//member is suspended
+	         status = true;
+	         memberID = verifyMember;
+	      }
+	      else if(memberType.equals("suspended")){
+		 status = false;
+	      }
 	   }
 	catch (NumberFormatException ex){
 	   System.out.println("Unable to verify member. Try Again.");
 	}
-	return true;	
+	return status;	
     }
 
 

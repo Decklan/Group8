@@ -5,7 +5,12 @@ public class Main {
     public static void main(String[] args){
 
 	Provider provide = new Provider(123456);
-	provide.memberVerification("Mike Brown");
+	if(provide.memberVerification(587857871)){
+	   System.out.println("IS a member");
+	}
+	else 
+	   System.out.println("is suspended");
+	
 
         //Create a new ChocAn object to run
         //ChocAn chocAnTerminal = new ChocAn();
