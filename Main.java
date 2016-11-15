@@ -16,9 +16,8 @@ public class Main {
         //testManager.addMember();
         //
         //
-        Provider p = new Provider(502891894);
-
-        p.createBill();
+        //Provider p = new Provider(768921693);
+        //p.createBill();
         
 
 

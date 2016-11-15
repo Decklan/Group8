@@ -21,10 +21,10 @@ public class Provider extends User {
         //this.memberID = 
     }
 
-    /*Name: promptID, Input: String, Output: int
+    /*Name: promptID, Input: String, int Output: int
     Description: Prompts for an ID and returns a valid reponse.
     */
-    protected int promptID(String name) {
+    protected int promptID(String name, int length) {
         System.out.print("Enter the " + name + " ID: ");
         //Read input as String and convert into int
         int idNumber = Integer.parseInt(System.console().readLine());
