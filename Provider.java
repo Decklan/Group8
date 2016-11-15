@@ -42,9 +42,11 @@ public class Provider extends User {
 	      else if(memberType.equals("suspended")){
 		 status = false;
 	      }
+	      else
+	  	 throw new NumberFormatException();
 	   }
 	catch (NumberFormatException ex){
-	   System.out.println("Unable to verify member. Try Again.");
+	   System.out.println("Invalid member ID. Unable to verify member. Try Again.");
 	}
 	return status;	
     }

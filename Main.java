@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args){
 
 	Provider provide = new Provider(123456);
-	if(provide.memberVerification(587857871)){
+	if(provide.memberVerification(768921693)){
 	   System.out.println("IS a member");
 	}
 	else 
