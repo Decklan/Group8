@@ -29,15 +29,24 @@ public class Provider extends User {
         System.out.print("Enter the " + name + " ID: ");
         int idNumber = Integer.parseInt(System.console().readLine());
         if(idNumber == 0 || String.valueOf(idNumber).length() != length) {
-            System.out.print("Invalid ID format. Please enter a " + length + "-digit ID number");
+            System.out.print("Invalid ID format. Please enter a " + length + "-digit ID number: ");
             idNumber = Integer.parseInt(System.console().readLine());
         }
         return idNumber;
     }
 
+    private String promptString(String prompt, int maxLength) {
+        System.out.print(prompt);
+        String buffer = System.console().readLine();
+        return buffer.substring(0, Math.min(maxLength, buffer.length()));
+    }
+
+    //Prompts the provider to create the bill
     public boolean createBill() {
         Date currentDate = new Date(System.currentTimeMillis());
         int serviceID = promptID("service", 6);
+        String comment = promptString("Enter a comment (100 max characters): ", 100);
+        data.createBill(887320551, 502891894, serviceID, 1, currentDate, comment); 
         return true;
     }
 
