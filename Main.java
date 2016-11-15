@@ -4,9 +4,17 @@ public class Main {
 
     public static void main(String[] args){
 
+	Provider provide = new Provider(123456);
+	if(provide.memberVerification(768921693)){
+	   System.out.println("IS a member");
+	}
+	else 
+	   System.out.println("is suspended");
+	
+
         //Create a new ChocAn object to run
-        ChocAn chocAnTerminal = new ChocAn();
-        chocAnTerminal.runChocAn();
+        //ChocAn chocAnTerminal = new ChocAn();
+        //chocAnTerminal.runChocAn();
         
         //User testManager = new Manager(987654321);
         //testManager.run();
