@@ -38,27 +38,13 @@ public class Manager extends User {
     }
 
     public boolean addOrganization(String status, int newID) {
-        System.out.print(status + " name: ");
-        String tempName = input.next();
-        input.nextLine();
-
-        System.out.print(status + " address: ");
-        String tempAddress = input.next();
-        input.nextLine();
-
-        System.out.print(status + " city: ");
-        String tempCity = input.next();
-        input.nextLine();
-
-        System.out.print(status + " state: ");
-        String tempState = input.next();
-        input.nextLine();
-
-        System.out.print(status + " zipCode: ");
-        int tempZip = input.nextInt();
+        String tempName =  getStringAnswer(status + " name: ", 25);
+        String tempAddress = getStringAnswer(status + " address: ", 25);
+        String tempCity = getStringAnswer(status + " city: ", 14);
+        String tempState = getStringAnswer(status + " state: ", 2);
+        int tempZip = getIntAnswer(status + " zipCode: ", 5);
 
         boolean queryStatus = data.addOrganization(newID, tempName, tempAddress, tempCity, tempState, tempZip, status);
-
         return queryStatus? true:false;
     }
 

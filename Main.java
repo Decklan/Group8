@@ -4,13 +4,8 @@ public class Main {
 
     public static void main(String[] args){
 
-	Provider provide = new Provider(123456);
-	if(provide.memberVerification(768921693)){
-	   System.out.println("IS a member");
-	}
-	else 
-	   System.out.println("is suspended");
-	
+       
+
 
         //Create a new ChocAn object to run
         //ChocAn chocAnTerminal = new ChocAn();
@@ -20,12 +15,20 @@ public class Main {
         //testManager.run();
 
         //Test adding member and provider
-        //Manager testManager = new Manager(987654321);
-        //testManager.addMember();
+        Manager testManager = new Manager(987654321);
+        testManager.addMember();
         //
         //
-        //Provider p = new Provider(768921693);
-        //p.createBill();
+        
+        /*
+        Provider p = new Provider(768921693);
+        if(p.memberVerification(774080694)){
+            System.out.println("IS a member");
+        }
+        else 
+            System.out.println("is suspended");
+        p.createBill();
+        */
         
 
 
