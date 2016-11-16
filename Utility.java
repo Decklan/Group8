@@ -10,6 +10,7 @@
  * Created by MMC on 11/11/16.
  */
 
+import java.awt.*;
 import java.util.Scanner;
 
 
@@ -34,14 +35,18 @@ public class Utility {
 
 
 
-    /*Performs a check on the user's input to see if
-        *they answered some form of "yes."
-        * INPUT: NONE
-        * OUTPUT: 0 for no, 1 for yes, 2 for an invalid response
-        */
-    public int checkAnswer() {
+    /* Performs a check on the user's input to see if
+     * they answered some form of "yes."
+     * INPUT: NONE
+     * OUTPUT: 0 for no, 1 for yes, 2 for an invalid response
+     */
+    public int checkAnswer(String prompt) {
 
-        String temp = input.nextLine();  //Catches the user's input
+
+        System.out.print(prompt);
+
+        String temp = input.next();  //Catches the user's input
+       // System.out.println(temp);
         int responseFlag;
 
         if (temp.equalsIgnoreCase("no") || temp.equalsIgnoreCase("n")) {
@@ -74,6 +79,7 @@ public class Utility {
    public boolean testIntegerInput(String userInput){
 
        boolean validInteger = false;
+       //System.out.println(userInput);
 
        try{
            Integer.parseInt(userInput);
@@ -82,10 +88,9 @@ public class Utility {
             validInteger = true;
        }
        catch (NumberFormatException ex){
-
+           //System.out.println(ex.getMessage());
            System.out.println("Invalid Input. Not an numerical value.");
        }
-
 
        return validInteger;
 
