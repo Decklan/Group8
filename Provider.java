@@ -32,24 +32,19 @@ public class Provider extends User {
     */
     public boolean memberVerification(int verifyMember) {
         String memberType;
-        try{	
-            //returns member, provider, manager or suspended 
-            memberType = DataAccess.userVerification(verifyMember);
 
-            if(memberType.equals("member")){
-                memberID = verifyMember;
-                return true;
-            }
-            else if(memberType.equals("suspended")){
-                System.out.println("Member suspended.");
-                return false;
-            }
-            else
-                throw new NumberFormatException();
+        //returns member, provider, manager or suspended 
+        memberType = DataAccess.userVerification(verifyMember);
+
+        if(memberType.equals("member")){
+            memberID = verifyMember;
+            System.out.println("member");
+            return true;
         }
-        catch (NumberFormatException ex){
-            System.out.println("Invalid member ID. Unable to verify member. Try Again.");
+        else if(memberType.equals("suspended")){
+            System.out.println("Member suspended.");
         }
+        System.out.println("Invalid member ID. Unable to verify member. Try Again.");
         return false;
     }
 
@@ -74,8 +69,11 @@ public class Provider extends User {
 
 /*********  Driver  **********/
     public void run() {
-        //memberVerification()
-        System.out.println("Provider driver");
+        System.out.println("Provider Terminal Mode");
 
+        int tempID;
+        do {
+            tempID = getIntAnswer("Please enter member ID: ", 9);
+        } while(!memberVerification(tempID));
     }
 }
