@@ -194,4 +194,31 @@ public class DataAccess{
         }
         return directory.toString();
     }
+
+    public boolean deleteAllMemberReport(int memberID) {
+        String query = "DELETE FROM report WHERE memberID = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID); 
+            preparedStatement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteAllProviderReport(int providerID) {
+        String query = "DELETE FROM report WHERE providerID = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, providerID); 
+            preparedStatement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
