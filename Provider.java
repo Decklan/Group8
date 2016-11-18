@@ -43,6 +43,7 @@ public class Provider extends User {
         }
         else if(memberType.equals("suspended")){
             System.out.println("Member suspended.");
+            return false;
         }
         System.out.println("Invalid member ID. Unable to verify member. Try Again.");
         return false;
