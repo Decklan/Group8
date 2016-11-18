@@ -221,4 +221,18 @@ public class DataAccess{
         }
         return false;
     }
+
+    public boolean deleteOrganization(int id, String status) {
+        String query = "DELETE FROM organization WHERE id= ? and status=?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id); 
+            preparedStatement.setString(2, status); 
+            preparedStatement.executeUpdate();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
