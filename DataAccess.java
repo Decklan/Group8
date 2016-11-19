@@ -120,6 +120,29 @@ public class DataAccess{
         return false;
     }
 
+    public boolean updateOrganization(int userID, String name, String street, 
+                                   String city, String state, int zipcode, String status) {
+        String query = "UPDATE organization SET name = ?, street = ?, city = ?, state = ?, zipcode = ?, status = ?)"
+                        +" WHERE id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name); 
+            preparedStatement.setString(2, street); 
+            preparedStatement.setString(3, city); 
+            preparedStatement.setString(4, state); 
+            preparedStatement.setInt(5, zipcode); 
+            preparedStatement.setString(6, status); 
+            preparedStatement.setInt(7, userID); 
+
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     //A query that will create bill for member
     public boolean createBill(int memberID, int providerID, int serviceID, int nuConsultation, Date provideddate, String comment) {
         String query = "INSERT INTO report (memberid, providerid, serviceid, numberconsultation, provideddate, comment)"
@@ -235,4 +258,5 @@ public class DataAccess{
         }
         return false;
     }
+
 }
