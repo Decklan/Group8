@@ -14,7 +14,17 @@ public abstract class User extends Utility {
     }
 
 
-
+    /* These error check functions do not cover all cases. If you need
+     * to check that input is an integer, use the function in the Utility
+     * class from which the User class extends.
+     *
+     * If you need to check the length of input use:
+     *     if (yourFieldHere.length() < desiredLength+1)
+     * If you need to check that the input is an integer use:
+     *     if (testIntegerInput(yourFieldHere)) --This is in the Utility class
+     ******
+     
+     
     protected String getStringAnswer(String question, int maxLength) {
         return promptString(question, maxLength);
     }
@@ -29,10 +39,10 @@ public abstract class User extends Utility {
         }
     }
 
-    /* Name: promptString
+     * Name: promptString
      * Input: String prompt, int maxLength
      * Output: String
-     * Description: Prompts for a message and truncates input by length passed as argument.*/
+     * Description: Prompts for a message and truncates input by length passed as argument.
     private String promptString(String prompt, int maxLength) {
         do {
             System.out.print(prompt);
@@ -45,6 +55,7 @@ public abstract class User extends Utility {
         } while (true);
 
     }
-
+    */
+        
     public abstract void run();
 }
