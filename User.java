@@ -22,7 +22,7 @@ public abstract class User extends Utility {
      *     if (yourFieldHere.length() < desiredLength+1)
      * If you need to check that the input is an integer use:
      *     if (testIntegerInput(yourFieldHere)) --This is in the Utility class
-     ******
+     */
      
      
     protected String getStringAnswer(String question, int maxLength) {
@@ -39,10 +39,10 @@ public abstract class User extends Utility {
         }
     }
 
-     * Name: promptString
-     * Input: String prompt, int maxLength
-     * Output: String
-     * Description: Prompts for a message and truncates input by length passed as argument.
+     //* Name: promptString
+     //* Input: String prompt, int maxLength
+     //* Output: String
+     //* Description: Prompts for a message and truncates input by length passed as argument.
     private String promptString(String prompt, int maxLength) {
         do {
             System.out.print(prompt);
@@ -55,7 +55,7 @@ public abstract class User extends Utility {
         } while (true);
 
     }
-    */
+
         
     public abstract void run();
 }
