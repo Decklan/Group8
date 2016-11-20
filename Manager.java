@@ -151,7 +151,7 @@ public class Manager extends User {
     }
 
     // Displays all of the manager menu options to keep the run function shorter and sweeter
-    public int displayMenu() {
+    public int menuPrompt() {
         int menuChoice = 0; // it will hold the value of the user input
         do {
             // Print menu options to the screen
@@ -160,7 +160,7 @@ public class Manager extends User {
             System.out.println("##\t (1) Add Member                                      ##");
             System.out.println("##\t (2) Add Provider                                    ##");
             System.out.println("##\t (3) Suspend/Unsuspend Member                        ##");
-            System.out.println("##\t (4) Back                                            ##"); // We need such option
+            System.out.println("##\t (4) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
             menuChoice = input.nextInt();
@@ -179,7 +179,7 @@ public class Manager extends User {
         int menuChoice;
         //clearScreen();                            // Clear the screen when the program starts
         do {                                        // Loop to test input against valid choices
-            menuChoice = displayMenu();             // Display the menu options to the screen and get the selected option
+            menuChoice = menuPrompt();             // Display the menu options to the screen and get the selected option
             //clearScreen();
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1)
