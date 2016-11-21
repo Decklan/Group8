@@ -186,6 +186,21 @@ public class DataAccess{
         }
         return directory.toString();
 	}
+	
+    //This function remove a member or provider
+    public boolean removeOrganization(int memberID) {
+        String query = "delete from organization WHERE  id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberID);
+            preparedStatement.executeUpdate();
+
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     //query that will return member bill as a string
     public String getMemberBill(int memberID) {
