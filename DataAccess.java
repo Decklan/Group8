@@ -92,7 +92,6 @@ public class DataAccess{
         return false;
     }
 
-
     //Query that will add a new member or provider
     public boolean addOrganization(int userID, String name, String street, 
                                    String city, String state, int zipcode, String status) {
@@ -110,7 +109,7 @@ public class DataAccess{
             preparedStatement.setString(7, status); 
 
             preparedStatement.executeUpdate();
-            System.out.println("Successfully added a new " + status);
+            System.out.println("\033[0;32m Successfully added a new " + status + "\033[0m");
             return true;
 
         } catch(SQLException e) {
