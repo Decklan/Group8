@@ -1,4 +1,3 @@
-import sun.misc.Cleaner;
 import java.util.Random;
 
 /**
@@ -38,7 +37,11 @@ public class Manager extends User {
         int newID = randomDigitsID();
         return addOrganization("provider", newID);
     }
-
+    //TODO MB: We need to implement these methods
+    public void removeMember(){}
+    public void removeProvider(){}
+    public void updateMember(){}
+    public void updateProvider(){}
     // Prompts the manager for basic organization information before adding to the database
     public boolean addOrganization(String status, int newID) {
         System.out.print(status + " name: ");
@@ -138,11 +141,11 @@ public class Manager extends User {
         return verify.equals("invalid");                //CHANGED FROM verify.equals("invalid")? true:false; (redundant)
     }
 
-    /* This function scans the database for a valid MEMBER (for suspension purposes)
+    /** This function scans the database for a valid MEMBER (for suspension purposes)
      * This function searches the database for a member specifically. The reason for this
      * is... if we just use isIDTaken(id) for the scan it searches ALL people in the database
      * including managers/providers and we don't want to suspend or unsuspend them.
-     */
+     **/
     public boolean isValidMember(int memberID) {
         String verify = DataAccess.userVerification(memberID);
         if (verify.equals("member") || verify.equals("suspended"))
@@ -157,38 +160,111 @@ public class Manager extends User {
             // Print menu options to the screen
             System.out.println("###########################################################");
             System.out.println("## Manager Menu Options:                                 ##");
-            System.out.println("##\t (1) Add Member                                      ##");
-            System.out.println("##\t (2) Add Provider                                    ##");
+            System.out.println("##\t (1) Edit Members                                    ##");
+            System.out.println("##\t (2) Edit Providers                                  ##");
             System.out.println("##\t (3) Suspend/Unsuspend Member                        ##");
             System.out.println("##\t (4) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
             menuChoice = input.nextInt();
             if(menuChoice <= 0 || menuChoice > 4) {
-                //clearScreen();
+                clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
         return menuChoice;
     }
 
+    /**
+     * This will function will display the submenu options for the manager to
+     * take actions members and providers
+     * @param user the user the manager will edit(Provider or Member)
+     * @return the function will return the option chosen by the manger
+     */
+    public int editSubmenu(String user){
+        int menuChoice = 0; // it will hold the value of the user input
+        do {
+            // Print menu options to the screen
+            System.out.println("###########################################################");
+            System.out.println(user +"s Edit Menu Options:");
+            System.out.println("\t (1) Add "+ user);
+            System.out.println("\t (2) Remove "+ user);
+            System.out.println("\t (3) Update "+ user);
+            System.out.println("\t (4) Return"); // We need such option
+            System.out.println("###########################################################");
+            System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
+            menuChoice = input.nextInt();
+            if(menuChoice <= 0 || menuChoice > 4) {
+                clearScreen();
+                System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
+            }
+        } while (menuChoice <= 0 || menuChoice > 4);
+        return menuChoice;
+    }
+
+    //This function will control actions in the submenu
+    public void submenuRun(String user) {
+
+        int menuChoice = 0;
+        clearScreen(); // Clear the screen when the program starts
+        do {         // Loop to test input against valid choices
+
+            menuChoice = editSubmenu(user); // Display the menu options to the screen and get the selected option
+            clearScreen();
+
+            // If cases handle running the appropriate method based on manager choice
+            if (menuChoice == 1) {
+                if(user.equals("Member"))
+                    addMember();
+                else
+                    addProvider();
+                waitForEnter();  //Wait for the user to press something then move on
+            }
+
+            else if (menuChoice == 2) {
+              if(user.equals("Member"))
+                   removeMember();
+                else
+                    removeProvider();
+              waitForEnter();
+            }
+            else if (menuChoice == 3){
+                if(user.equals("Member"))
+                    updateMember();
+                else
+                    updateProvider();
+              waitForEnter();
+            }
+        } while (menuChoice != 4);
+        return; // Return to the main menu
+    }
+
     /*********  Driver  **********/
     // This function is used as the menu function when a manager is allocated
     public void run() {
         // Integer to hold manager's menu choice
-        int menuChoice;
-        //clearScreen();                            // Clear the screen when the program starts
-        do {                                        // Loop to test input against valid choices
-            menuChoice = menuPrompt();             // Display the menu options to the screen and get the selected option
-            //clearScreen();
+        int menuChoice = 0;
+
+        clearScreen(); // Clear the screen when the program starts
+        do {         // Loop to test input against valid choices
+
+            menuChoice = menuPrompt(); // Display the menu options to the screen and get the selected option
+            clearScreen();
+
             // If cases handle running the appropriate method based on manager choice
-            if (menuChoice == 1)
-                addMember();
-            else if (menuChoice == 2)
-                addProvider();
-            else if (menuChoice == 3)
+            if (menuChoice == 1) {
+                submenuRun("Member");
+                waitForEnter();  //Wait for the user to press something then move on
+            }
+
+            else if (menuChoice == 2) {
+                submenuRun("Provider");
+                waitForEnter();
+            }
+            else if (menuChoice == 3){
                 changeMemberStanding();
-            //waitForEnter();
+                waitForEnter();
+            }
         } while (menuChoice != 4);
     }
 }
