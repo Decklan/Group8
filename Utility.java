@@ -97,7 +97,7 @@ public class Utility {
    }
     
     /**
-     * Clear the screen console screen
+     * Clear the console screen
      */
     public void clearScreen(){
         for(int i = 0; i < 100; ++i )
