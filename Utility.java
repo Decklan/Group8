@@ -95,6 +95,21 @@ public class Utility {
        return validInteger;
 
    }
+    
+    /**
+     * Clear the screen console screen
+     */
+    public void clearScreen(){
+        for(int i = 0; i < 100; ++i )
+            System.out.println("\n\n\n\n");
+    }
+
+    /**
+     * Wait for the user to press a key to continue
+     */
+    public void waitForEnter(){
+        input.nextLine();
+    }
 
 
 
