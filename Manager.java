@@ -42,6 +42,7 @@ public class Manager extends User {
     public void removeProvider(){}
     public void updateMember(){}
     public void updateProvider(){}
+
     // Prompts the manager for basic organization information before adding to the database
     public boolean addOrganization(String status, int newID) {
         System.out.print(status + " name: ");
@@ -60,8 +61,22 @@ public class Manager extends User {
         String tempState = input.next();
         input.nextLine();
 
-        System.out.print(status + " zipCode: ");
-        int tempZip = input.nextInt();
+        int tempZip;
+        do{
+
+            System.out.print(status + " zipCode: ");
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                tempZip = Integer.parseInt(testInput);
+            }
+            else{
+                System.out.print("Please enter a numerical zip code.");
+                tempZip = -1;
+            }
+            }while(tempZip < 0);
+
+        //int tempZip = input.nextInt();
 
         boolean queryStatus = data.addOrganization(newID, tempName, tempAddress, tempCity, tempState, tempZip, status);
         return queryStatus;
@@ -106,7 +121,18 @@ public class Manager extends User {
         do {
             // Prompt for the memberID
             System.out.print("Please enter the member's ID number: ");
-            member = input.nextInt();
+
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                member = Integer.parseInt(testInput);
+            }
+            else{
+                member = 0;
+            }
+
+            // member = input.nextInt();        Throws an error if integer isn't entered
+
             // Prompt if the ID isn't in the database
             if (!isValidMember(member))
                 System.out.println("The entered member ID was not found. Please enter a valid member ID.");
@@ -166,9 +192,20 @@ public class Manager extends User {
             System.out.println("##\t (4) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = input.nextInt();
+
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                menuChoice = Integer.parseInt(testInput);
+            }
+            else{
+                menuChoice = 0;
+            }
+
+            //menuChoice = input.nextInt();     Throws an error if user enters char or string.
+
             if(menuChoice <= 0 || menuChoice > 4) {
-                clearScreen();
+                //clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
@@ -193,9 +230,20 @@ public class Manager extends User {
             System.out.println("\t (4) Return"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = input.nextInt();
+
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                menuChoice = Integer.parseInt(testInput);
+            }
+            else{
+                menuChoice = 0;
+            }
+
+            //menuChoice = input.nextInt();     Throws an error is a char or string is entered
+
             if(menuChoice <= 0 || menuChoice > 4) {
-                clearScreen();
+                //clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
@@ -206,11 +254,11 @@ public class Manager extends User {
     public void submenuRun(String user) {
 
         int menuChoice = 0;
-        clearScreen(); // Clear the screen when the program starts
+        //clearScreen(); // Clear the screen when the program starts
         do {         // Loop to test input against valid choices
 
             menuChoice = editSubmenu(user); // Display the menu options to the screen and get the selected option
-            clearScreen();
+            //clearScreen();
 
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
@@ -218,7 +266,7 @@ public class Manager extends User {
                     addMember();
                 else
                     addProvider();
-                waitForEnter();  //Wait for the user to press something then move on
+                //waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
@@ -226,14 +274,14 @@ public class Manager extends User {
                    removeMember();
                 else
                     removeProvider();
-              waitForEnter();
+              //waitForEnter();
             }
             else if (menuChoice == 3){
                 if(user.equals("Member"))
                     updateMember();
                 else
                     updateProvider();
-              waitForEnter();
+              //waitForEnter();
             }
         } while (menuChoice != 4);
         return; // Return to the main menu
@@ -245,25 +293,25 @@ public class Manager extends User {
         // Integer to hold manager's menu choice
         int menuChoice = 0;
 
-        clearScreen(); // Clear the screen when the program starts
+        //clearScreen(); // Clear the screen when the program starts
         do {         // Loop to test input against valid choices
 
             menuChoice = menuPrompt(); // Display the menu options to the screen and get the selected option
-            clearScreen();
+         //   clearScreen();
 
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
                 submenuRun("Member");
-                waitForEnter();  //Wait for the user to press something then move on
+           //     waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
                 submenuRun("Provider");
-                waitForEnter();
+             //   waitForEnter();
             }
             else if (menuChoice == 3){
                 changeMemberStanding();
-                waitForEnter();
+               // waitForEnter();
             }
         } while (menuChoice != 4);
     }
