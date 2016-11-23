@@ -60,27 +60,31 @@ public class Provider extends User {
 
         //Get membership ID number while checking if it's valid or not.
         do {
-            System.out.println("Enter the member id: ");
+            System.out.print("Enter the member id: ");
             memberID = input.nextInt();     //CHECK INPUT
             input.nextLine();
 
         }while(!memberVerification(memberID));           //What if a Provider discoves a member is invalid? do we need an exit statement to avoid getting stuck?
 
         //Get service ID number while checking if it's valid or not.
-        System.out.println("Enter the service id: ");
+        System.out.print("Enter the service id: ");
         serviceID = input.nextInt();        //CHECK INPUT
         input.nextLine();
 
         while (data.serviceVerification(serviceID) == false) {
             System.out.println("Invalid service ID!");
-            System.out.println("Enter the service id:");
+            System.out.print("Enter the service id:");
             serviceID = input.nextInt();        //CHECK INPUT
             input.nextLine();
 
         }
-        System.out.println("Enter a comment, up to 100 characters");
+        System.out.println("Enter a comment, up to 100 characters: ");
         String comment = input.next();      //CHECK INPUT
+        input.nextLine();
         data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
+
+        clearScreen();
+        System.out.println("Bill successfuly saved.");
         return true;
     }
 
@@ -102,8 +106,9 @@ public class Provider extends User {
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
 
             MenuChoice = input.nextInt();   //Input Provider's choice   //CHECK INPUT
+            input.nextLine();
 
-                if(MenuChoice <= 0 || MenuChoice > 4) {
+            if(MenuChoice <= 0 || MenuChoice > 4) {
 
                 System.out.println("\n Please make a valid choice!");
             }
@@ -123,8 +128,9 @@ public class Provider extends User {
 
             if (Providerchoice == 1) {       //Provider chose to Validate Member
                 System.out.println("Enter the member ID number: ");     //Get the Member's ID number
-                memberID = input.nextInt();         //CHECK INPUT
-               memberVerification(memberID);
+                memberID = input.nextInt(); //CHECK INPUT
+                input.nextLine();
+                memberVerification(memberID);
             }
             if (Providerchoice == 2) {       //Provider chose to Create Bill for Member
                 createBill();
