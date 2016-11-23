@@ -62,17 +62,20 @@ public class Provider extends User {
         do {
             System.out.println("Enter the member id: ");
             memberID = input.nextInt();     //CHECK INPUT
+            input.nextLine();
 
         }while(!memberVerification(memberID));           //What if a Provider discoves a member is invalid? do we need an exit statement to avoid getting stuck?
 
         //Get service ID number while checking if it's valid or not.
         System.out.println("Enter the service id: ");
         serviceID = input.nextInt();        //CHECK INPUT
+        input.nextLine();
 
         while (data.serviceVerification(serviceID) == false) {
             System.out.println("Invalid service ID!");
             System.out.println("Enter the service id:");
             serviceID = input.nextInt();        //CHECK INPUT
+            input.nextLine();
 
         }
         System.out.println("Enter a comment, up to 100 characters");
