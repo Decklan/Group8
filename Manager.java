@@ -76,8 +76,6 @@ public class Manager extends User {
             }
             }while(tempZip < 0);
 
-        //int tempZip = input.nextInt();
-
         boolean queryStatus = data.addOrganization(newID, tempName, tempAddress, tempCity, tempState, tempZip, status);
         return queryStatus;
     }
@@ -130,8 +128,6 @@ public class Manager extends User {
             else{
                 member = 0;
             }
-
-            // member = input.nextInt();        Throws an error if integer isn't entered
 
             // Prompt if the ID isn't in the database
             if (!isValidMember(member))
@@ -202,10 +198,8 @@ public class Manager extends User {
                 menuChoice = 0;
             }
 
-            //menuChoice = input.nextInt();     Throws an error if user enters char or string.
-
             if(menuChoice <= 0 || menuChoice > 4) {
-                //clearScreen();
+                clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
@@ -240,10 +234,8 @@ public class Manager extends User {
                 menuChoice = 0;
             }
 
-            //menuChoice = input.nextInt();     Throws an error is a char or string is entered
-
             if(menuChoice <= 0 || menuChoice > 4) {
-                //clearScreen();
+                clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
@@ -254,11 +246,10 @@ public class Manager extends User {
     public void submenuRun(String user) {
 
         int menuChoice = 0;
-        //clearScreen(); // Clear the screen when the program starts
         do {         // Loop to test input against valid choices
 
             menuChoice = editSubmenu(user); // Display the menu options to the screen and get the selected option
-            //clearScreen();
+            clearScreen();
 
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
@@ -266,7 +257,7 @@ public class Manager extends User {
                     addMember();
                 else
                     addProvider();
-                //waitForEnter();  //Wait for the user to press something then move on
+                waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
@@ -274,14 +265,14 @@ public class Manager extends User {
                    removeMember();
                 else
                     removeProvider();
-              //waitForEnter();
+              waitForEnter();
             }
             else if (menuChoice == 3){
                 if(user.equals("Member"))
                     updateMember();
                 else
                     updateProvider();
-              //waitForEnter();
+              waitForEnter();
             }
         } while (menuChoice != 4);
         return; // Return to the main menu
@@ -297,21 +288,21 @@ public class Manager extends User {
         do {         // Loop to test input against valid choices
 
             menuChoice = menuPrompt(); // Display the menu options to the screen and get the selected option
-         //   clearScreen();
+            clearScreen();
 
-            // If cases handle running the appropriate method based on manager choice
+            //If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
                 submenuRun("Member");
-           //     waitForEnter();  //Wait for the user to press something then move on
+                waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
                 submenuRun("Provider");
-             //   waitForEnter();
+                waitForEnter();
             }
             else if (menuChoice == 3){
                 changeMemberStanding();
-               // waitForEnter();
+                waitForEnter();
             }
         } while (menuChoice != 4);
     }
