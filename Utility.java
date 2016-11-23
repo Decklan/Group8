@@ -45,8 +45,9 @@ public class Utility {
 
         System.out.print(prompt);
 
-        String temp = input.next();  //Catches the user's input
-       // System.out.println(temp);
+        String temp = input.next();  // Catches the user's input
+        input.nextLine();            // Consumes newline character
+
         int responseFlag;
 
         if (temp.equalsIgnoreCase("no") || temp.equalsIgnoreCase("n")) {
