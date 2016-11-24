@@ -26,58 +26,113 @@ public class Manager extends User {
         return newMemberID;
     }
 
-    // Generates a random ID number for a new member and runs addOrganization
-    public boolean addMember() {
-        int newID = randomDigitsID();
-        return addOrganization("member", newID);
+    /* Verifies whether the entered ID is already in use or not
+     *      1. If the entered ID is taken, verify will not be set to "invalid". Return will be false
+     *         to signify the ID is already in the database
+     *      2. If the entered ID isn't in the database, verify will be set to "invalid". This means
+     *         that the ID is not currently in use. idIDTaken returns true to signify it is not taken
+     */
+    public boolean isIDTaken(int id) {
+        String verify = DataAccess.userVerification(id);
+        return verify.equals("invalid");                //CHANGED FROM verify.equals("invalid")? true:false; (redundant)
     }
 
-    // Generates a random ID number for a new provider and runs addOrganization
-    public boolean addProvider() {
-        int newID = randomDigitsID();
-        return addOrganization("provider", newID);
+    /** This function scans the database for a valid MEMBER (for suspension purposes)
+     * This function searches the database for a member specifically. The reason for this
+     * is... if we just use isIDTaken(id) for the scan it searches ALL people in the database
+     * including managers/providers and we don't want to suspend or unsuspend them.
+     **/
+    public boolean isValidMember(int memberID) {
+        String verify = DataAccess.userVerification(memberID);
+        if (verify.equals("member") || verify.equals("suspended"))
+            return true;
+        else return false;
     }
+
+    // Prompts for a string input
+    public String promptString(String user, String info) {
+        System.out.print(user + " " + info + ": ");
+        String tempString = input.nextLine();
+        return tempString;
+    }
+
+    // Prompts for an integer
+    public int promptInt(String user, String info) {
+        System.out.print(user + " " + info + ": ");
+        int tempInt = input.nextInt();
+        input.nextLine();
+        return tempInt;
+    }
+
     //TODO MB: We need to implement these methods
-    public void removeMember(){}
-    public void removeProvider(){}
-    public void updateMember(){}
-    public void updateProvider(){}
 
     // Prompts the manager for basic organization information before adding to the database
-    public boolean addOrganization(String status, int newID) {
-        System.out.print(status + " name: ");
-        String tempName = input.next();
-        input.nextLine();
+    public boolean addOrganization(String user) {
+        // Declare organization info variables
+        String tempName, tempAddress, tempCity, tempState;
+        int newID, tempZip;
+        // Loop while the information entered isn't correct
+        do {
+            tempName = promptString(user, "name");           // Get the organization name
+            tempAddress = promptString(user, "address");     // Get the organization address
+            tempCity = promptString(user, "city");           // Get the organization city
+            tempState = promptString(user, "state");         // Get the organization state
+            newID = randomDigitsID();                           // Generate an ID number for the organization
 
-        System.out.print(status + " address: ");
-        String tempAddress = input.next();
-        input.nextLine();
+            do {
 
-        System.out.print(status + " city: ");
-        String tempCity = input.next();
-        input.nextLine();
+                System.out.print(user + " zipCode: ");
+                //If/Else block to verify input is an integer
+                String testInput = input.next();
+                if (testIntegerInput(testInput)) {
+                    tempZip = Integer.parseInt(testInput);
+                } else {
+                    System.out.print("Please enter a numerical zip code.");
+                    tempZip = -1;
+                }
+            } while (tempZip < 0);
+            clearScreen();
+            System.out.println(user + " name: " + tempName);
+            System.out.println(user + " address: " + tempAddress);
+            System.out.println(user + " city: " + tempCity);
+            System.out.println(user + " state: " + tempState);
+            System.out.println(user + " zip code: " + tempZip);
+        } while (checkAnswer("Is this information correct?: ") != 1);
 
-        System.out.print(status + " state: ");
-        String tempState = input.next();
-        input.nextLine();
-
-        int tempZip;
-        do{
-
-            System.out.print(status + " zipCode: ");
-            //If/Else block to verify input is an integer
-            String testInput = input.next();
-            if (testIntegerInput(testInput)) {
-                tempZip = Integer.parseInt(testInput);
-            }
-            else{
-                System.out.print("Please enter a numerical zip code.");
-                tempZip = -1;
-            }
-            }while(tempZip < 0);
-
-        boolean queryStatus = data.addOrganization(newID, tempName, tempAddress, tempCity, tempState, tempZip, status);
+        boolean queryStatus = data.addOrganization(newID, tempName, tempAddress, tempCity, tempState, tempZip, user);
         return queryStatus;
+    }
+
+    /*
+     * This function removes a specific organization from the database. The argument passed
+     * in is either "member" or "provider" dependant on the menu the user chose to enter.
+     */
+    public boolean removeOrganization(String user) {
+        // Prompt the manager for the ID number for the organization they would like to remove
+        int remove;                 // Holds the ID number for the provider or member to be removed
+        boolean valid;              // Holds the bool value for if the ID is in use or not
+        // Do the ID verification while the ID entered is not valid
+        do {
+            System.out.print("Please enter the " + user + " ID for the " + user + " you would like to remove: ");
+            remove = input.nextInt();
+            input.nextLine();
+            valid = isIDTaken(remove);
+            // If the ID entered isn't in the database
+            if (valid)
+                System.out.println("Not a valid " + user + " ID. Please enter a valid "+ user + " ID.");
+        } while (valid);
+
+        // Holds the bool value from the deleteOrganization function to signify success or failure of removal
+        boolean delete = data.removeOrganization(remove);
+        return delete;
+    }
+
+    /*
+     * This function updates a specific organizations information. The argument passed in
+     * is either "member" or "provider" dependant on the menu that user chose to enter.
+     */
+    public void updateOrganization(String user) {
+
     }
 
     // Method to suspend a member
@@ -140,7 +195,6 @@ public class Manager extends User {
             // Prompt manager for suspension or unsuspension of a member
             System.out.print("Do you wish to suspend or unsuspend this member?: ");
             choice = input.next();
-            input.nextLine();
 
             // Run data access function corresponding to managers choice
             if (choice.equalsIgnoreCase("suspend"))
@@ -150,29 +204,6 @@ public class Manager extends User {
             else System.out.println("Please enter a valid choice!");
         } while (!choice.equalsIgnoreCase("suspend") || choice.equalsIgnoreCase("unsuspend"));
         return false; // Fail flag
-    }
-
-    /* Verifies whether the entered ID is already in use or not
-     *      1. If the entered ID is taken, verify will not be set to "invalid". Return will be false
-     *         to signify the ID is already in the database
-     *      2. If the entered ID isn't in the database, verify will be set to "invalid". This means
-     *         that the ID is not currently in use. idIDTaken returns true to signify it is not taken
-     */
-    public boolean isIDTaken(int id) {
-        String verify = DataAccess.userVerification(id);
-        return verify.equals("invalid");                //CHANGED FROM verify.equals("invalid")? true:false; (redundant)
-    }
-
-    /** This function scans the database for a valid MEMBER (for suspension purposes)
-     * This function searches the database for a member specifically. The reason for this
-     * is... if we just use isIDTaken(id) for the scan it searches ALL people in the database
-     * including managers/providers and we don't want to suspend or unsuspend them.
-     **/
-    public boolean isValidMember(int memberID) {
-        String verify = DataAccess.userVerification(memberID);
-        if (verify.equals("member") || verify.equals("suspended"))
-            return true;
-        else return false;
     }
 
     // Displays all of the manager menu options to keep the run function shorter and sweeter
@@ -193,6 +224,7 @@ public class Manager extends User {
             String testInput = input.next();
             if (testIntegerInput(testInput)) {
                 menuChoice = Integer.parseInt(testInput);
+                input.nextLine();
             }
             else{
                 menuChoice = 0;
@@ -229,6 +261,7 @@ public class Manager extends User {
             String testInput = input.next();
             if (testIntegerInput(testInput)) {
                 menuChoice = Integer.parseInt(testInput);
+                input.nextLine();
             }
             else{
                 menuChoice = 0;
@@ -253,26 +286,17 @@ public class Manager extends User {
 
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
-                if(user.equals("Member"))
-                    addMember();
-                else
-                    addProvider();
+                addOrganization(user);
                 waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
-              if(user.equals("Member"))
-                   removeMember();
-                else
-                    removeProvider();
-              waitForEnter();
+                removeOrganization(user);
+                waitForEnter();
             }
             else if (menuChoice == 3){
-                if(user.equals("Member"))
-                    updateMember();
-                else
-                    updateProvider();
-              waitForEnter();
+                updateOrganization(user);
+                waitForEnter();
             }
         } while (menuChoice != 4);
         return; // Return to the main menu
@@ -292,12 +316,12 @@ public class Manager extends User {
 
             //If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
-                submenuRun("Member");
+                submenuRun("member");
                 waitForEnter();  //Wait for the user to press something then move on
             }
 
             else if (menuChoice == 2) {
-                submenuRun("Provider");
+                submenuRun("provider");
                 waitForEnter();
             }
             else if (menuChoice == 3){
