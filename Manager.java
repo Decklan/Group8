@@ -56,11 +56,22 @@ public class Manager extends User {
         return tempString;
     }
 
-    // Prompts for an integer
+    /*
+     * Prompts for an integer and checks to make sure it is of the proper input type.
+     */
     public int promptInt(String user, String info) {
-        System.out.print(user + " " + info + ": ");
-        int tempInt = input.nextInt();
-        input.nextLine();
+        int tempInt;
+        do {
+            System.out.print(user + " " + info + ": ");
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                tempInt = Integer.parseInt(testInput);
+            } else {
+                System.out.print("Please enter a numerical zip code.");
+                tempInt = -1;
+            }
+        } while (tempInt < 0);
         return tempInt;
     }
 
@@ -77,20 +88,9 @@ public class Manager extends User {
             tempAddress = promptString(user, "address");     // Get the organization address
             tempCity = promptString(user, "city");           // Get the organization city
             tempState = promptString(user, "state");         // Get the organization state
-            newID = randomDigitsID();                           // Generate an ID number for the organization
+            newID = randomDigitsID();                        // Generate an ID number for the organization
+            tempZip = promptInt(user, "zip code");           // Get the organization zip code
 
-            do {
-
-                System.out.print(user + " zipCode: ");
-                //If/Else block to verify input is an integer
-                String testInput = input.next();
-                if (testIntegerInput(testInput)) {
-                    tempZip = Integer.parseInt(testInput);
-                } else {
-                    System.out.print("Please enter a numerical zip code.");
-                    tempZip = -1;
-                }
-            } while (tempZip < 0);
             clearScreen();
             System.out.println(user + " name: " + tempName);
             System.out.println(user + " address: " + tempAddress);
@@ -107,6 +107,7 @@ public class Manager extends User {
      * This function removes a specific organization from the database. The argument passed
      * in is either "member" or "provider" dependant on the menu the user chose to enter.
      */
+    // CURRENTLY ENCOUNTERS ERROR WHEN REMOVING
     public boolean removeOrganization(String user) {
         // Prompt the manager for the ID number for the organization they would like to remove
         int remove;                 // Holds the ID number for the provider or member to be removed
@@ -131,40 +132,38 @@ public class Manager extends User {
      * This function updates a specific organizations information. The argument passed in
      * is either "member" or "provider" dependant on the menu that user chose to enter.
      */
-    public void updateOrganization(String user) {
+    // CURRENTLY ENCOUNTERS AN ERROR UPDATING
+    public boolean updateOrganization(String user) {
+        // Prompt manager for ID of organization they would like to update
+        int organizationID;
+        boolean valid;
+        do {
+            System.out.print("Enter the ID number for the " + user + " you would like to update: ");
+            organizationID = input.nextInt();
+            input.nextLine();
+            valid = isIDTaken(organizationID);
+            if (valid)
+                System.out.println("Not a valid " + user + " ID. Please try again.");
+        } while (valid);
 
-    }
+        String tempName, tempAddress, tempCity, tempState;
+        int tempZip;
+        do {
+            tempName = promptString(user, "name");
+            tempAddress = promptString(user, "address");
+            tempCity = promptString(user, "city");
+            tempState = promptString(user, "state");
+            tempZip = promptInt(user, "zip code");
 
-    // Method to suspend a member
-    public boolean suspendMember(int memberID) {
-        // Success captures the return value of the suspendMember function
-        boolean success = data.suspendMember(memberID);
-        // If success is true the member was successfully suspended
-        if (success) {
-            System.out.println("Member successfully suspended!");
-            return true;
-        }
-        // Otherwise the member wasn't suspended successfully
-        else {
-            System.out.println("Couldn't suspend member..");
-            return false;
-        }
-    }
+            System.out.println(user + " name: " + tempName);
+            System.out.println(user + " address: " + tempAddress);
+            System.out.println(user + " city: " + tempCity);
+            System.out.println(user + " state: " + tempState);
+            System.out.println(user + " zip code: " + tempZip);
+        } while(checkAnswer("Is this information correct?: ") != 1);
 
-    // Method to unsuspend a member
-    public boolean unsuspendMember(int memberID) {
-        // Success captures the return value of the unsuspendMember function
-        boolean success = data.unsuspendMember(memberID);
-        // If success is true the member was successfully suspended
-        if (success) {
-            System.out.println("Member successfully unsuspended");
-            return true;
-        }
-        // Otherwise the member wasn't suspended successfully
-        else {
-            System.out.println("Couldn't unsuspend member..");
-            return false;
-        }
+        boolean update = data.updateOrganization(organizationID, tempName, tempAddress, tempCity, tempState, tempZip, user);
+        return update;
     }
 
     // Lets a manager suspend or unsuspend a member in the database
@@ -198,9 +197,9 @@ public class Manager extends User {
 
             // Run data access function corresponding to managers choice
             if (choice.equalsIgnoreCase("suspend"))
-                return suspendMember(member);
+                return data.suspendMember(member);
             else if (choice.equalsIgnoreCase("unsuspend"))
-                return unsuspendMember(member);
+                return data.unsuspendMember(member);
             else System.out.println("Please enter a valid choice!");
         } while (!choice.equalsIgnoreCase("suspend") || choice.equalsIgnoreCase("unsuspend"));
         return false; // Fail flag
@@ -280,7 +279,6 @@ public class Manager extends User {
 
         int menuChoice = 0;
         do {         // Loop to test input against valid choices
-
             menuChoice = editSubmenu(user); // Display the menu options to the screen and get the selected option
             clearScreen();
 
@@ -289,7 +287,6 @@ public class Manager extends User {
                 addOrganization(user);
                 waitForEnter();  //Wait for the user to press something then move on
             }
-
             else if (menuChoice == 2) {
                 removeOrganization(user);
                 waitForEnter();
@@ -308,9 +305,7 @@ public class Manager extends User {
         // Integer to hold manager's menu choice
         int menuChoice = 0;
 
-        //clearScreen(); // Clear the screen when the program starts
         do {         // Loop to test input against valid choices
-
             menuChoice = menuPrompt(); // Display the menu options to the screen and get the selected option
             clearScreen();
 
@@ -319,13 +314,16 @@ public class Manager extends User {
                 submenuRun("member");
                 waitForEnter();  //Wait for the user to press something then move on
             }
-
             else if (menuChoice == 2) {
                 submenuRun("provider");
                 waitForEnter();
             }
             else if (menuChoice == 3){
-                changeMemberStanding();
+                boolean change = changeMemberStanding();
+                if (change)
+                    System.out.println("Member standing successfully changed.");
+                else
+                    System.out.println("There was a problem changing the member's standing.");
                 waitForEnter();
             }
         } while (menuChoice != 4);
