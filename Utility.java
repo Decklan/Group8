@@ -31,8 +31,36 @@ public class Utility {
         input = new Scanner(System.in);
 
     }
+    public String readString(String prompt){
+
+        String temp;
+        System.out.print(prompt); //prompt the user 
+        temp = input.nextLine();  //Read the string from buffer
+        return temp;
+
+    }
 
 
+    /**
+    *Does all the nesserary work to prompt user for and return an int
+    */
+    public int readInt(String prompt,String errorMessage)
+    {
+        int tempInt;
+        do {
+            System.out.print(prompt);
+            //If/Else block to verify input is an integer
+            String testInput = input.next();
+            if (testIntegerInput(testInput)) {
+                tempInt = Integer.parseInt(testInput);
+            } else {
+                System.out.println(errorMessage);
+                tempInt = -1;
+            }
+        } while (tempInt < 0);
+        input.nextLine();
+        return tempInt;
+    }
 
 
     /* Performs a check on the user's input to see if

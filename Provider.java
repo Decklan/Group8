@@ -60,27 +60,16 @@ public class Provider extends User {
 
         //Get membership ID number while checking if it's valid or not.
         do {
-            System.out.print("Enter the member id: ");
-            memberID = input.nextInt();     //CHECK INPUT
-            input.nextLine();
-
+            memberID = readInt("Enter the member id: ","Please enter a numerical id");
         }while(!memberVerification(memberID));           //What if a Provider discoves a member is invalid? do we need an exit statement to avoid getting stuck?
 
         //Get service ID number while checking if it's valid or not.
-        System.out.print("Enter the service id: ");
-        serviceID = input.nextInt();        //CHECK INPUT
-        input.nextLine();
-
+        serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         while (data.serviceVerification(serviceID) == false) {
             System.out.println("Invalid service ID!");
-            System.out.print("Enter the service id:");
-            serviceID = input.nextInt();        //CHECK INPUT
-            input.nextLine();
-
+            serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         }
-        System.out.println("Enter a comment, up to 100 characters: ");
-        String comment = input.next();      //CHECK INPUT
-        input.nextLine();
+        String comment = readString("Enter a comment, up to 100 characters: ");
         data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
 
         clearScreen();
@@ -127,9 +116,7 @@ public class Provider extends User {
             Providerchoice = menudisplay();
 
             if (Providerchoice == 1) {       //Provider chose to Validate Member
-                System.out.println("Enter the member ID number: ");     //Get the Member's ID number
-                memberID = input.nextInt(); //CHECK INPUT
-                input.nextLine();
+                memberID = readInt("Enter the member ID number: ","Please enter a numerical id");
                 memberVerification(memberID);
             }
             if (Providerchoice == 2) {       //Provider chose to Create Bill for Member

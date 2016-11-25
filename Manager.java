@@ -49,34 +49,6 @@ public class Manager extends User {
         else return false;
     }
 
-    // Prompts for a string input
-    public String promptString(String user, String info) {
-        System.out.print(user + " " + info + ": ");
-        String tempString = input.nextLine();
-        return tempString;
-    }
-
-    /*
-     * Prompts for an integer and checks to make sure it is of the proper input type.
-     */
-    public int promptInt(String user, String info) {
-        int tempInt;
-        do {
-            System.out.print(user + " " + info + ": ");
-            //If/Else block to verify input is an integer
-            String testInput = input.next();
-            if (testIntegerInput(testInput)) {
-                tempInt = Integer.parseInt(testInput);
-            } else {
-                System.out.print("Please enter a numerical zip code.");
-                tempInt = -1;
-            }
-        } while (tempInt < 0);
-        return tempInt;
-    }
-
-    //TODO MB: We need to implement these methods
-
     // Prompts the manager for basic organization information before adding to the database
     public boolean addOrganization(String user) {
         // Declare organization info variables
@@ -84,12 +56,12 @@ public class Manager extends User {
         int newID, tempZip;
         // Loop while the information entered isn't correct
         do {
-            tempName = promptString(user, "name");           // Get the organization name
-            tempAddress = promptString(user, "address");     // Get the organization address
-            tempCity = promptString(user, "city");           // Get the organization city
-            tempState = promptString(user, "state");         // Get the organization state
+            tempName = readString(user + " name: ");          // Get the organization name
+            tempAddress = readString(user + " address: ");    // Get the organization address
+            tempCity = readString(user + " city: ");          // Get the organization city
+            tempState = readString(user + " state: ");       // Get the organization state
             newID = randomDigitsID();                        // Generate an ID number for the organization
-            tempZip = promptInt(user, "zip code");           // Get the organization zip code
+            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");         // Get the organization zip code
 
             clearScreen();
             System.out.println(user + " name: " + tempName);
@@ -114,9 +86,7 @@ public class Manager extends User {
         boolean valid;              // Holds the bool value for if the ID is in use or not
         // Do the ID verification while the ID entered is not valid
         do {
-            System.out.print("Please enter the " + user + " ID for the " + user + " you would like to remove: ");
-            remove = input.nextInt();
-            input.nextLine();
+            remove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
             valid = isIDTaken(remove);
             // If the ID entered isn't in the database
             if (valid)
@@ -138,23 +108,23 @@ public class Manager extends User {
         int organizationID;
         boolean valid;
         do {
-            System.out.print("Enter the ID number for the " + user + " you would like to update: ");
-            organizationID = input.nextInt();
-            input.nextLine();
+            organizationID = readInt("Enter the ID number for the " + user + " you would like to update: ", "Please enter a numerical Id");
             valid = isIDTaken(organizationID);
-            if (valid)
+            if (valid) ///////What is going on here? 
                 System.out.println("Not a valid " + user + " ID. Please try again.");
         } while (valid);
 
         String tempName, tempAddress, tempCity, tempState;
         int tempZip;
         do {
-            tempName = promptString(user, "name");
-            tempAddress = promptString(user, "address");
-            tempCity = promptString(user, "city");
-            tempState = promptString(user, "state");
-            tempZip = promptInt(user, "zip code");
+            
+            tempName = readString(user + " name: ");          // Get the organization name
+            tempAddress = readString(user + " address: ");    // Get the organization address
+            tempCity = readString(user + " city: ");          // Get the organization city
+            tempState = readString(user + " state: ");       // Get the organization state
+            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");         // Get the organization zip code
 
+            clearScreen();
             System.out.println(user + " name: " + tempName);
             System.out.println(user + " address: " + tempAddress);
             System.out.println(user + " city: " + tempCity);
@@ -172,17 +142,7 @@ public class Manager extends User {
         int member;
         do {
             // Prompt for the memberID
-            System.out.print("Please enter the member's ID number: ");
-
-            //If/Else block to verify input is an integer
-            String testInput = input.next();
-            if (testIntegerInput(testInput)) {
-                member = Integer.parseInt(testInput);
-            }
-            else{
-                member = 0;
-            }
-
+            member = readInt("Please enter the member's ID number: ","Please enter a numerical Id");
             // Prompt if the ID isn't in the database
             if (!isValidMember(member))
                 System.out.println("The entered member ID was not found. Please enter a valid member ID.");
@@ -192,8 +152,7 @@ public class Manager extends User {
         String choice; // Holds whether the manager wants to suspend or unsuspend the member
         do {
             // Prompt manager for suspension or unsuspension of a member
-            System.out.print("Do you wish to suspend or unsuspend this member?: ");
-            choice = input.next();
+            choice = readString("Do you wish to suspend or unsuspend this member?: ");
 
             // Run data access function corresponding to managers choice
             if (choice.equalsIgnoreCase("suspend"))
@@ -218,17 +177,7 @@ public class Manager extends User {
             System.out.println("##\t (4) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-
-            //If/Else block to verify input is an integer
-            String testInput = input.next();
-            if (testIntegerInput(testInput)) {
-                menuChoice = Integer.parseInt(testInput);
-                input.nextLine();
-            }
-            else{
-                menuChoice = 0;
-            }
-
+            menuChoice = readInt("","");
             if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
@@ -255,17 +204,7 @@ public class Manager extends User {
             System.out.println("\t (4) Return"); // We need such option
             System.out.println("###########################################################");
             System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-
-            //If/Else block to verify input is an integer
-            String testInput = input.next();
-            if (testIntegerInput(testInput)) {
-                menuChoice = Integer.parseInt(testInput);
-                input.nextLine();
-            }
-            else{
-                menuChoice = 0;
-            }
-
+            menuChoice = readInt("","");
             if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
                 System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
@@ -312,11 +251,9 @@ public class Manager extends User {
             //If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
                 submenuRun("member");
-                waitForEnter();  //Wait for the user to press something then move on
             }
             else if (menuChoice == 2) {
                 submenuRun("provider");
-                waitForEnter();
             }
             else if (menuChoice == 3){
                 boolean change = changeMemberStanding();
@@ -324,7 +261,6 @@ public class Manager extends User {
                     System.out.println("Member standing successfully changed.");
                 else
                     System.out.println("There was a problem changing the member's standing.");
-                waitForEnter();
             }
         } while (menuChoice != 4);
     }
