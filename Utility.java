@@ -40,7 +40,6 @@ public class Utility {
 
     }
 
-
     /**
     *Does all the nesserary work to prompt user for and return an int
     */
@@ -140,6 +139,17 @@ public class Utility {
         input.nextLine();
     }
 
+    public void errorMessage(String message){
+                 System.out.println(" \033[0;31m "+ message +"\033[0m");
+    }
+
+    public void warningMessage(String message){
+                 System.out.println(" \033[0;33m "+ message +"\033[0m");
+    }
+
+    public void successMessage(String message){
+                 System.out.println(" \033[0;32m "+ message +"\033[0m");
+    }
 
 
 }

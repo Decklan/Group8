@@ -20,7 +20,7 @@ public class Provider extends User {
         if (providerDirectory != null) {
             System.out.println(providerDirectory);
         } else {
-            System.out.println("Provider Directory Is Empty");
+            warningMessage("Provider Directory Is Empty");
         }
 
     }
@@ -39,13 +39,13 @@ public class Provider extends User {
 
         if (memberType.equals("member")) {
             memberID = verifyMember;
-            System.out.println("member is valid");
+            successMessage("member is valid");
             return true;
         } else if (memberType.equals("suspended")) {
-            System.out.println("Member suspended.");
+            successMessage("Member suspended.");
             return false;
         }
-        System.out.println("Invalid member ID. Unable to verify member. Try Again.");
+        errorMessage("Invalid member ID. Unable to verify member. Try Again.");
         return false;
     }
 
@@ -66,14 +66,14 @@ public class Provider extends User {
         //Get service ID number while checking if it's valid or not.
         serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         while (data.serviceVerification(serviceID) == false) {
-            System.out.println("Invalid service ID!");
+            errorMessage("Invalid service ID!");
             serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         }
         String comment = readString("Enter a comment, up to 100 characters: ");
         data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
 
         clearScreen();
-        System.out.println("Bill successfuly saved.");
+        successMessage("Bill successfuly saved.");
         return true;
     }
 
@@ -99,7 +99,7 @@ public class Provider extends User {
 
             if(MenuChoice <= 0 || MenuChoice > 4) {
 
-                System.out.println("\n Please make a valid choice!");
+                errorMessage("\n Please make a valid choice!");
             }
         } while (MenuChoice <= 0 || MenuChoice > 4);
         return MenuChoice;

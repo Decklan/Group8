@@ -90,7 +90,7 @@ public class Manager extends User {
             valid = isIDTaken(remove);
             // If the ID entered isn't in the database
             if (valid)
-                System.out.println("Not a valid " + user + " ID. Please enter a valid "+ user + " ID.");
+                errorMessage("Not a valid " + user + " ID. Please enter a valid "+ user + " ID.");
         } while (valid);
 
         // Holds the bool value from the deleteOrganization function to signify success or failure of removal
@@ -111,7 +111,7 @@ public class Manager extends User {
             organizationID = readInt("Enter the ID number for the " + user + " you would like to update: ", "Please enter a numerical Id");
             valid = isIDTaken(organizationID);
             if (valid) ///////What is going on here? 
-                System.out.println("Not a valid " + user + " ID. Please try again.");
+                errorMessage("Not a valid " + user + " ID. Please try again.");
         } while (valid);
 
         String tempName, tempAddress, tempCity, tempState;
@@ -145,7 +145,7 @@ public class Manager extends User {
             member = readInt("Please enter the member's ID number: ","Please enter a numerical Id");
             // Prompt if the ID isn't in the database
             if (!isValidMember(member))
-                System.out.println("The entered member ID was not found. Please enter a valid member ID.");
+                errorMessage("The entered member ID was not found. Please enter a valid member ID.");
         } while (!isValidMember(member));
 
         // Loop to make sure choice is entered properly
@@ -159,7 +159,7 @@ public class Manager extends User {
                 return data.suspendMember(member);
             else if (choice.equalsIgnoreCase("unsuspend"))
                 return data.unsuspendMember(member);
-            else System.out.println("Please enter a valid choice!");
+            errorMessage("Please enter a valid choice!");
         } while (!choice.equalsIgnoreCase("suspend") || choice.equalsIgnoreCase("unsuspend"));
         return false; // Fail flag
     }
@@ -180,7 +180,7 @@ public class Manager extends User {
             menuChoice = readInt("","");
             if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
-                System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
+                errorMessage("Please make a valid choice!");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
         return menuChoice;
@@ -207,7 +207,7 @@ public class Manager extends User {
             menuChoice = readInt("","");
             if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
-                System.out.println(" \033[0;31m Please make a valid choice! \033[0m");
+                errorMessage("Please make a valid choice!");
             }
         } while (menuChoice <= 0 || menuChoice > 4);
         return menuChoice;
@@ -258,9 +258,9 @@ public class Manager extends User {
             else if (menuChoice == 3){
                 boolean change = changeMemberStanding();
                 if (change)
-                    System.out.println("Member standing successfully changed.");
+                    successMessage("Member standing successfully changed.");
                 else
-                    System.out.println("There was a problem changing the member's standing.");
+                    errorMessage("There was a problem changing the member's standing.");
             }
         } while (menuChoice != 4);
     }
