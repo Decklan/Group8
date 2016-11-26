@@ -121,7 +121,7 @@ public class DataAccess{
 
     public boolean updateOrganization(int userID, String name, String street, 
                                    String city, String state, int zipcode, String status) {
-        String query = "UPDATE organization SET name = ?, street = ?, city = ?, state = ?, zipcode = ?, status = ?)"
+        String query = "UPDATE organization SET name = ?, street = ?, city = ?, state = ?, zipcode = ?, status = ?"
                         +" WHERE id = ?";
 
         try {
