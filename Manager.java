@@ -79,22 +79,25 @@ public class Manager extends User {
      * This function removes a specific organization from the database. The argument passed
      * in is either "member" or "provider" dependant on the menu the user chose to enter.
      */
-    // CURRENTLY ENCOUNTERS ERROR WHEN REMOVING
     public boolean removeOrganization(String user) {
         // Prompt the manager for the ID number for the organization they would like to remove
-        int remove;                 // Holds the ID number for the provider or member to be removed
+        int userToRemove;                 // Holds the ID number for the provider or member to be removed
         boolean valid;              // Holds the bool value for if the ID is in use or not
         // Do the ID verification while the ID entered is not valid
         do {
-            remove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
-            valid = isIDTaken(remove);
+            userToRemove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
+            valid = isIDTaken(userToRemove);
             // If the ID entered isn't in the database
             if (valid)
                 errorMessage("Not a valid " + user + " ID. Please enter a valid "+ user + " ID.");
         } while (valid);
 
         // Holds the bool value from the deleteOrganization function to signify success or failure of removal
-        boolean delete = data.removeOrganization(remove);
+        if (user.equals("member"))
+            data.deleteAllMemberReport(userToRemove);
+        else
+            data.deleteAllProviderReport(userToRemove);
+        boolean delete = data.removeOrganization(userToRemove);
         return delete;
     }
 
@@ -102,7 +105,6 @@ public class Manager extends User {
      * This function updates a specific organizations information. The argument passed in
      * is either "member" or "provider" dependant on the menu that user chose to enter.
      */
-    // CURRENTLY ENCOUNTERS AN ERROR UPDATING
     public boolean updateOrganization(String user) {
         // Prompt manager for ID of organization they would like to update
         int organizationID;
@@ -223,16 +225,31 @@ public class Manager extends User {
 
             // If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
-                addOrganization(user);
+                boolean add = addOrganization(user);
+                if (add)
+                    successMessage(user + " successfully added. Enter to continue.");
+                else
+                    errorMessage("There was a problem adding the " + user + ". Enter to continue.");
                 waitForEnter();  //Wait for the user to press something then move on
+                clearScreen();   //Clear the screen after enter is pressed
             }
             else if (menuChoice == 2) {
-                removeOrganization(user);
+                boolean remove = removeOrganization(user);
+                if (remove)
+                    successMessage(user + " successfully removed. Enter to continue.");
+                else
+                    errorMessage("There was a problem removing the " + user + ". Enter to continue.");
                 waitForEnter();
+                clearScreen();
             }
             else if (menuChoice == 3){
-                updateOrganization(user);
+                boolean update = updateOrganization(user);
+                if (update)
+                    successMessage(user + " successfully updated. Enter to continue.");
+                else
+                    errorMessage("There was a problem updating the " + user + ". Enter to continue.");
                 waitForEnter();
+                clearScreen();
             }
         } while (menuChoice != 4);
         return; // Return to the main menu
@@ -258,9 +275,11 @@ public class Manager extends User {
             else if (menuChoice == 3){
                 boolean change = changeMemberStanding();
                 if (change)
-                    successMessage("Member standing successfully changed.");
+                    successMessage("Member standing successfully changed. Enter to continue.");
                 else
                     errorMessage("There was a problem changing the member's standing.");
+                waitForEnter();
+                clearScreen();
             }
         } while (menuChoice != 4);
     }
