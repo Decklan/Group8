@@ -17,6 +17,7 @@ public class Provider extends User {
     public void providerDirectoryDisplay() {
         String providerDirectory = data.directoryLookUp();
 
+        clearScreen();
         if (providerDirectory != null) {
             System.out.println(providerDirectory);
         } else {
@@ -39,12 +40,15 @@ public class Provider extends User {
 
         if (memberType.equals("member")) {
             memberID = verifyMember;
+            clearScreen();
             successMessage("member is valid");
             return true;
         } else if (memberType.equals("suspended")) {
+            clearScreen();
             successMessage("Member suspended.");
             return false;
         }
+        clearScreen();
         errorMessage("Invalid member ID. Unable to verify member. Try Again.");
         return false;
     }
@@ -57,18 +61,23 @@ public class Provider extends User {
     public boolean createBill() {
         Date currentDate = new Date(System.currentTimeMillis());
         int serviceID;
+        int again;
 
+        clearScreen();
         //Get membership ID number while checking if it's valid or not.
         do {
             memberID = readInt("Enter the member id: ","Please enter a numerical id");
-        }while(!memberVerification(memberID));           //What if a Provider discoves a member is invalid? do we need an exit statement to avoid getting stuck?
+        }while(!memberVerification(memberID));
 
         //Get service ID number while checking if it's valid or not.
         serviceID = readInt("Enter the service id: ","Please enter a numerical id");
-        while (data.serviceVerification(serviceID) == false) {
+        while (!data.serviceVerification(serviceID)) {
             errorMessage("Invalid service ID!");
             serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         }
+
+        clearScreen();
+        //Get comment from provider about service
         String comment = readString("Enter a comment, up to 100 characters: ");
         data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
 
@@ -80,6 +89,7 @@ public class Provider extends User {
 
     public int menudisplay() {
         int MenuChoice = 0;     //stores user's response when making Menu selections
+
         System.out.println("Welcome to the Provider Menu.");
 
         do {
@@ -89,16 +99,14 @@ public class Provider extends User {
             System.out.println("##\t (1) Validate Member                                  ##");
             System.out.println("##\t (2) Create Bill for Member                           ##");
             System.out.println("##\t (3) Display Provider Directory                       ##");
-            System.out.println("##\t (4) Exit Provider menu                               ##"); // Not implemented(?)
+            System.out.println("##\t (4) Exit Provider menu                               ##");
             System.out.println("###########################################################");
 
-            System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-
-            MenuChoice = input.nextInt();   //Input Provider's choice   //CHECK INPUT
-            input.nextLine();
+            System.out.println("Enter your choice (1-4): ");
+           MenuChoice = readInt("","Enter your choice (1-4): ");
 
             if(MenuChoice <= 0 || MenuChoice > 4) {
-
+                clearScreen();
                 errorMessage("\n Please make a valid choice!");
             }
         } while (MenuChoice <= 0 || MenuChoice > 4);
@@ -116,6 +124,7 @@ public class Provider extends User {
             Providerchoice = menudisplay();
 
             if (Providerchoice == 1) {       //Provider chose to Validate Member
+                clearScreen();
                 memberID = readInt("Enter the member ID number: ","Please enter a numerical id");
                 memberVerification(memberID);
             }
