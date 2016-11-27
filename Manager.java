@@ -81,12 +81,12 @@ public class Manager extends User {
      */
     public boolean removeOrganization(String user) {
         // Prompt the manager for the ID number for the organization they would like to remove
-        int remove;                 // Holds the ID number for the provider or member to be removed
+        int userToRemove;                 // Holds the ID number for the provider or member to be removed
         boolean valid;              // Holds the bool value for if the ID is in use or not
         // Do the ID verification while the ID entered is not valid
         do {
-            remove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
-            valid = isIDTaken(remove);
+            userToRemove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
+            valid = isIDTaken(userToRemove);
             // If the ID entered isn't in the database
             if (valid)
                 errorMessage("Not a valid " + user + " ID. Please enter a valid "+ user + " ID.");
@@ -94,10 +94,10 @@ public class Manager extends User {
 
         // Holds the bool value from the deleteOrganization function to signify success or failure of removal
         if (user.equals("member"))
-            data.deleteAllMemberReport(remove);
+            data.deleteAllMemberReport(userToRemove);
         else
-            data.deleteAllProviderReport(remove);
-        boolean delete = data.removeOrganization(remove);
+            data.deleteAllProviderReport(userToRemove);
+        boolean delete = data.removeOrganization(userToRemove);
         return delete;
     }
 
