@@ -107,7 +107,6 @@ public class Utility {
    public boolean testIntegerInput(String userInput){
 
        boolean validInteger = false;
-       //System.out.println(userInput);
 
        try{
            Integer.parseInt(userInput);
@@ -116,7 +115,6 @@ public class Utility {
             validInteger = true;
        }
        catch (NumberFormatException ex){
-           //System.out.println(ex.getMessage());
            System.out.println("Invalid Input. Not an numerical value.");
        }
 

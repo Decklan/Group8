@@ -176,15 +176,15 @@ public class Manager extends User {
             System.out.println("##\t (1) Edit Members                                    ##");
             System.out.println("##\t (2) Edit Providers                                  ##");
             System.out.println("##\t (3) Suspend/Unsuspend Member                        ##");
-            System.out.println("##\t (4) Quit                                            ##"); // We need such option
+            System.out.println("##\t (4) Generate Weekly Member Emails                   ##"); // CAN CHANGE TO MORE APPROPRIATE NAME IF NEED BE
+            System.out.println("##\t (5) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
-            System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = readInt("","");
-            if(menuChoice <= 0 || menuChoice > 4) {
+            menuChoice = readInt("Enter a menu choice (1-4): ","");
+            if(menuChoice <= 0 || menuChoice > 5) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
             }
-        } while (menuChoice <= 0 || menuChoice > 4);
+        } while (menuChoice <= 0 || menuChoice > 5);
         return menuChoice;
     }
 
@@ -281,6 +281,16 @@ public class Manager extends User {
                 waitForEnter();
                 clearScreen();
             }
-        } while (menuChoice != 4);
+            // ADDED THIS SECTION TO THE MENU FOR RUNNING DATAACCESS FUNCTION
+            else if (menuChoice == 4) {
+                boolean reportGen = data.exportOrganizationToFile();
+                if (reportGen)
+                    successMessage("Successfully exported members.");
+                else
+                    errorMessage("There was a problem exporting members.");
+                waitForEnter();
+                clearScreen();
+            }
+        } while (menuChoice != 5);
     }
 }
