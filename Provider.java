@@ -87,7 +87,7 @@ public class Provider extends User {
     }
 
 
-    public int menudisplay() {
+    public int menuDisplay() {
         int MenuChoice = 0;     //stores user's response when making Menu selections
 
         System.out.println("Welcome to the Provider Menu.");
@@ -102,7 +102,7 @@ public class Provider extends User {
             System.out.println("##\t (4) Exit Provider menu                               ##");
             System.out.println("###########################################################");
 
-            System.out.println("Enter your choice (1-4): ");
+            System.out.print("Enter your choice (1-4): ");
            MenuChoice = readInt("","Enter your choice (1-4): ");
 
             if(MenuChoice <= 0 || MenuChoice > 4) {
@@ -121,7 +121,7 @@ public class Provider extends User {
     public void run() {
         int Providerchoice;
         do {
-            Providerchoice = menudisplay();
+            Providerchoice = menuDisplay();
 
             if (Providerchoice == 1) {       //Provider chose to Validate Member
                 clearScreen();
