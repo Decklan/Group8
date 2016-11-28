@@ -1,4 +1,13 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+
 
 public class DataAccess{
 
@@ -143,7 +152,7 @@ public class DataAccess{
         return false;
     }
     //A query that will create bill for member
-    public boolean createBill(int memberID, int providerID, int serviceID, int nuConsultation, Date provideddate, String comment) {
+    public boolean createBill(int memberID, int providerID, int serviceID, int nuConsultation, java.sql.Date provideddate, String comment) {
         String query = "INSERT INTO report (memberid, providerid, serviceid, numberconsultation, provideddate, comment)"
                         + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
@@ -186,6 +195,31 @@ public class DataAccess{
         }
         return directory.toString();
 	}
+
+    public List<Organization> getMembersList()
+    {
+        String query = "SELECT * FROM organization WHERE status = 'member'";
+        List<Organization> organizations = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet results = preparedStatement.executeQuery();
+
+            while(results.next()) {
+                Organization org = new Organization();
+                org.Id = results.getInt("id");
+                org.Name = results.getString("name");
+                org.Street = results.getString("street");
+                org.City = results.getString("city");
+                org.State = results.getString("state");
+                org.ZipCode = results.getInt("zipcode");
+                org.Status = results.getString("status");
+                organizations.add(org);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return organizations;
+    }
 	
     //This function remove a member or provider
     public boolean removeOrganization(int memberID) {
@@ -230,6 +264,88 @@ public class DataAccess{
             e.printStackTrace();
         }
         return directory.toString();
+    }
+
+    // MIGHT NEED TO CHANGE THIS TO ONLY GRAB PROVIDER NAME, SERVICE DATE, SERVICE NAME (ALL THATS REQUIRED)
+    public List<ServiceReport> getServiceReport(int memberId){
+                String query = "SELECT r.provideddate, r.providerid, o.name, r.memberid, r.serviceid, pd.fee, r.comment,pd.name as ServiceName "+
+                        "FROM organization o JOIN report r ON o.id = r.memberid "+
+                        "JOIN provider_directory pd ON r.serviceid = pd.id WHERE r.memberid = ?";
+
+       List<ServiceReport> services = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, memberId);
+            ResultSet results = preparedStatement.executeQuery();
+
+            while(results.next()) {
+                ServiceReport service = new ServiceReport();
+                service.ServiceDate = results.getDate("provideddate");
+                service.SerivceID = results.getInt("serviceid");
+                service.ServiceName = results.getString("servicename");
+                service.MemberId =  results.getInt("memberid");
+                service.PatientName = results.getString("name");
+                service.ProviderID =  results.getInt("providerid");
+                service.Fee = results.getInt("fee");
+                service.Comment = results.getString("comment");
+                services.add(service);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return services;
+    }
+
+    // Function to export organization to a file
+    public boolean exportOrganizationToFile() {
+
+        List<Organization> memberRegistry = getMembersList();
+        if (memberRegistry == null)                     // If the memberRegistry doesn't get set appropriately
+            return false;
+
+        try {
+        String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
+        File dir = new File(System.getProperty("user.dir"),"ChocAn Reports");
+        if (!dir.exists()) // If the file doesn't exist in that path create it
+                dir.mkdir();
+        for (Organization org : memberRegistry) {          // For each member in the list perform these actions
+            List<ServiceReport> memberReports = getServiceReport(org.Id);       // Retrieve the services that member received
+            if (!memberReports.isEmpty()){
+                    String fileName = org.Name + "(" + date + ")";                      // Create the file name
+                File file = new File(dir.getPath(), fileName + ".txt");  // Establish the path to the file
+
+                if (!file.exists()) // If the file doesn't exist in that path create it
+                    file.createNewFile();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file)); // Allocate the BufferedWriter to write the information to the file
+                for (ServiceReport report : memberReports) {
+                    writer.write("Service date: " + report.ServiceDate.toString());
+                    writer.newLine();
+                    writer.write("Service Id: " + report.SerivceID);
+                    writer.newLine();
+                    writer.write("Member Id: " + report.MemberId);
+                    writer.newLine();
+                    writer.write("Provider Id: " + report.ProviderID);
+                    writer.newLine();
+                    writer.write("Service name: " + report.ServiceName);
+                    writer.newLine();
+                    writer.write("PatientName name: " + report.PatientName);
+                    writer.newLine();
+                    writer.write("Comment: " + report.Comment);
+                    writer.newLine();
+                    writer.write("Fee: " + report.Fee);
+                    writer.newLine();
+                    writer.write("--------------------------------------------------------");
+                    writer.newLine();
+                    writer.newLine();
+                }
+                writer.flush();
+            }
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public boolean deleteAllMemberReport(int memberID) {
