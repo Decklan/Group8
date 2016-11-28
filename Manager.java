@@ -179,7 +179,7 @@ public class Manager extends User {
             System.out.println("##\t (4) Generate Weekly Member Emails                   ##"); // CAN CHANGE TO MORE APPROPRIATE NAME IF NEED BE
             System.out.println("##\t (5) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
-            menuChoice = readInt("Enter a menu choice (1-4): ","");
+            menuChoice = readInt("Enter a menu choice (1-5): ","");
             if(menuChoice <= 0 || menuChoice > 5) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
