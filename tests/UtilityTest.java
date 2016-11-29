@@ -27,7 +27,9 @@ public class UtilityTest {
     public void testTestIntegerInput() throws Exception {
         assertEquals(true, temp.testIntegerInput("12365"));
         assertEquals(true, temp.testIntegerInput("123652323"));
+        assertEquals(true, temp.testIntegerInput("-12365"));
         assertEquals(false, temp.testIntegerInput("asdgfg"));
+        assertEquals(false, temp.testIntegerInput("daniel sanders"));
     }
 
     @Test
