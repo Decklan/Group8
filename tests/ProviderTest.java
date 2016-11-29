@@ -26,7 +26,7 @@ public class ProviderTest {
     }
 
     @Test
-    public void testMenudisplay() throws Exception {
+    public void testMenuDisplay() throws Exception {
 
     }
 
