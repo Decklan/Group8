@@ -102,8 +102,8 @@ public class Provider extends User {
             System.out.println("##\t (4) Exit Provider menu                               ##");
             System.out.println("###########################################################");
 
-            System.out.print("Enter your choice (1-4): ");
-           MenuChoice = readInt("","Enter your choice (1-4): ");
+            //System.out.print("Enter your choice (1-4): ");
+           MenuChoice = readInt("Enter your choice (1-4): ","");
 
             if(MenuChoice <= 0 || MenuChoice > 4) {
                 clearScreen();
