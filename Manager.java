@@ -205,8 +205,8 @@ public class Manager extends User {
             System.out.println("\t (3) Update "+ user);
             System.out.println("\t (4) Return"); // We need such option
             System.out.println("###########################################################");
-            System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = readInt("","");
+            //System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
+            menuChoice = readInt("Enter your choice (1-4): ","");
             if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
@@ -292,5 +292,7 @@ public class Manager extends User {
                 clearScreen();
             }
         } while (menuChoice != 5);
+
     }
+
 }
