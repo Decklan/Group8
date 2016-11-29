@@ -14,24 +14,9 @@ public class ProviderTest {
     }
 
     @Test
-    public void testProviderDirectoryDisplay() throws Exception {
-
-    }
-
-    @Test
     public void testCreateBill() throws Exception {
         providence = new Provider(884003881);
         assertEquals(true,providence.data.serviceVerification(175812));
         assertEquals(false,providence.data.serviceVerification(111111));
-    }
-
-    @Test
-    public void testMenuDisplay() throws Exception {
-
-    }
-
-    @Test
-    public void testRun() throws Exception {
-
     }
 }
