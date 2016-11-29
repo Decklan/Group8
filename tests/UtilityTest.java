@@ -2,9 +2,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by sohan on 11/29/2016.
- */
+
 public class UtilityTest {
     Utility temp = new Utility();
 
