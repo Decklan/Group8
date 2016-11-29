@@ -8,9 +8,9 @@ public class ProviderTest {
     @Test
     public void testMemberVerification() throws Exception {
         providence = new Provider(884003881);
-        assertEquals(true, providence.memberVerification(644147161));//test using valid ID
-        assertEquals(false, providence.memberVerification(-4562135));//test using invalid ID
-        assertEquals(false, providence.memberVerification(1));//test using manager's ID
+        assertEquals(true, providence.memberVerification(644147161)); //test using valid ID
+        assertEquals(false, providence.memberVerification(-4562135)); //test using invalid ID
+        assertEquals(false, providence.memberVerification(1));        //test using manager's ID
     }
 
     @Test
