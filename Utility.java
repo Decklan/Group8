@@ -41,7 +41,7 @@ public class Utility {
     }
 
     /**
-    *Does all the nesserary work to prompt user for and return an int
+    *Does all the necessary work to prompt user for and return an int
     */
     public int readInt(String prompt,String errorMessage)
     {
