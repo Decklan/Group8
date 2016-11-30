@@ -9,11 +9,6 @@ public class ManagerTest {
     protected Manager ChocAn;
 
     @Test
-    public void randomDigitsID() throws Exception {
-
-    }
-
-    @Test
     public void isIDTaken() throws Exception {
         ChocAn = new Manager(433671813);
         assertTrue(ChocAn.isIDTaken(987654321));
@@ -29,11 +24,6 @@ public class ManagerTest {
         assertFalse(ChocAn.isValidMember(884003881)); //Provider
         //Active == Suspended == True
         assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
-    }
-
-    @Test
-    public void addOrganization() throws Exception {
-
     }
 
     @Test
