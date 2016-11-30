@@ -196,12 +196,13 @@ public class DataAccess{
         return directory.toString();
 	}
 
-    public List<Organization> getMembersList()
+    public List<Organization> getOrganizationList(String user)
     {
-        String query = "SELECT * FROM organization WHERE status = 'member'";
+        String query = "SELECT * FROM organization WHERE status = ?";
         List<Organization> organizations = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user);
             ResultSet results = preparedStatement.executeQuery();
 
             while(results.next()) {
@@ -268,9 +269,10 @@ public class DataAccess{
 
     // MIGHT NEED TO CHANGE THIS TO ONLY GRAB PROVIDER NAME, SERVICE DATE, SERVICE NAME (ALL THATS REQUIRED)
     public List<ServiceReport> getServiceReport(int memberId){
-                String query = "SELECT r.provideddate, r.providerid, o.name, r.memberid, r.serviceid, pd.fee, r.comment,pd.name as ServiceName "+
-                        "FROM organization o JOIN report r ON o.id = r.memberid "+
-                        "JOIN provider_directory pd ON r.serviceid = pd.id WHERE r.memberid = ?";
+
+        String query = "SELECT r.provideddate, r.providerid,  p.name as ProviderName, o.name, r.memberid, r.serviceid, pd.fee, r.comment,pd.name as ServiceName "+
+                "FROM organization o JOIN report r ON o.id = r.memberid "+
+                "JOIN provider_directory pd ON r.serviceid = pd.id INNER JOIN (SELECT * from organization WHERE status ='provider') p on p.id = r.providerid WHERE r.memberid = ?";
 
        List<ServiceReport> services = new ArrayList<>();
 
@@ -283,6 +285,7 @@ public class DataAccess{
                 ServiceReport service = new ServiceReport();
                 service.ServiceDate = results.getDate("provideddate");
                 service.SerivceID = results.getInt("serviceid");
+                service.ProviderName = results.getString("providername");
                 service.ServiceName = results.getString("servicename");
                 service.MemberId =  results.getInt("memberid");
                 service.PatientName = results.getString("name");
@@ -300,7 +303,7 @@ public class DataAccess{
     // Function to export organization to a file
     public boolean exportOrganizationToFile() {
 
-        List<Organization> memberRegistry = getMembersList();
+        List<Organization> memberRegistry = getOrganizationList("member");
         if (memberRegistry == null)                     // If the memberRegistry doesn't get set appropriately
             return false;
 
@@ -333,7 +336,7 @@ public class DataAccess{
                 for (ServiceReport report : memberReports) {
                     writer.write("Service date: " + report.ServiceDate.toString());
                     writer.newLine();
-                    writer.write("Provider Id: " + report.ProviderID);
+                    writer.write("Provider name: " + report.ProviderName);
                     writer.newLine();
                     writer.write("Service name: " + report.ServiceName);
                     writer.newLine();

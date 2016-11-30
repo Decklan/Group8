@@ -7,6 +7,7 @@ public class ServiceReport {
     // modify data access to account for this.
     public Date ServiceDate;
     public int SerivceID;
+    public String ProviderName;
     public int MemberId;
     public int ProviderID;
     public String ServiceName;
