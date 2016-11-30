@@ -1,10 +1,8 @@
+package test;
+import org.junit.Assert;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-/**
- * Created by Van on 11/29/16.
- */
 public class ManagerTest {
     protected Manager ChocAn;
 
@@ -23,7 +21,7 @@ public class ManagerTest {
         assertFalse(ChocAn.isValidMember(433671813)); //Manager
         assertFalse(ChocAn.isValidMember(884003881)); //Provider
         //Active == Suspended == True
-        assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
+        Assert.assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
     }
 
 }
