@@ -2,9 +2,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by roberto on 11/29/2016.
- */
+
 public class DataAccessTest {
 
     protected DataAccess dataAccess = new DataAccess();
