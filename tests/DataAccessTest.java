@@ -53,34 +53,34 @@ public class DataAccessTest {
     public void addOrganization() throws Exception {
 
         assertEquals(true, dataAccess.addOrganization(998877665,
-                "Donald Trump", "Trump Tower", "New York", "NY", 10022, "member"));
+                "Donald Trump", "Trump Tower", "New York", "NY", 10022, "member"));         //add new test member
 
         assertEquals(true, dataAccess.addOrganization(887766554,
-                "Hillary Clinton", "Wall Street", "New York", "NY", 10022, "provider"));
+                "Hillary Clinton", "Wall Street", "New York", "NY", 10022, "provider"));    //add new test provider
 
         assertEquals(true, dataAccess.addOrganization(776655443,
-                "Bernie Sanders", "Vermont St", "Montpelier", "VT", 55601, "manager"));
+                "Bernie Sanders", "Vermont St", "Montpelier", "VT", 55601, "manager"));     //add new test manager
     }
 
     @Test
     public void updateOrganization() throws Exception {
 
         assertEquals(true, dataAccess.updateOrganization(998877665,
-                "Sir Donald Trump", "White House", "Washington", "DC", 20500, "member"));
+                "Sir Donald Trump", "White House", "Washington", "DC", 20500, "member"));       //update test member info
 
         assertEquals(true, dataAccess.updateOrganization(887766554,
-                "Miss Hillary Clinton", "Not The Whit House", "Washington", "DC", 20500, "provider"));
+                "Miss Hillary Clinton", "Not The Whit House", "Washington", "DC", 20500, "provider"));  //update test provider info
 
         assertEquals(true, dataAccess.updateOrganization(776655443,
-                "Feel The Bern", "Not Wall Street", "Washington", "DC", 20500, "manager"));
+                "Feel The Bern", "Not Wall Street", "Washington", "DC", 20500, "manager"));     //update test manager info
     }
 
     @Test
     public void removeOrganization() throws Exception {
 
-        assertEquals(true, dataAccess.removeOrganization(998877665));
-        assertEquals(true, dataAccess.removeOrganization(887766554));
-        assertEquals(true, dataAccess.removeOrganization(776655443));
+        assertEquals(true, dataAccess.removeOrganization(998877665));   //remove test member
+        assertEquals(true, dataAccess.removeOrganization(887766554));   //remove test provider
+        assertEquals(true, dataAccess.removeOrganization(776655443));   //remove test manager
     }
 
 }
