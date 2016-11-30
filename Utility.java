@@ -1,4 +1,4 @@
--/**		
+/**
  - * This file (Utility.java) includes the implementation		
  - * of the Utility class. This class constructs a Scanner		
  - * object, so other classes can derive from it to		
@@ -8,8 +8,7 @@
  - * frequently throughout the program		
  - *		
  - * Created by MMC on 11/11/16.		
- - */		
- -
+ - */
 
 import java.awt.*;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class Utility {
     }
 
     /**
-    *Does all the nesserary work to prompt user for and return an int
+    *Does all the necessary work to prompt user for and return an int
     */
     public int readInt(String prompt,String errorMessage)
     {

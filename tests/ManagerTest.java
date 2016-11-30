@@ -1,4 +1,3 @@
-package test;
 import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -21,7 +20,7 @@ public class ManagerTest {
         assertFalse(ChocAn.isValidMember(433671813)); //Manager
         assertFalse(ChocAn.isValidMember(884003881)); //Provider
         //Active == Suspended == True
-        Assert.assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
+        assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
     }
 
 }
