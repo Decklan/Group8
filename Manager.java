@@ -8,9 +8,9 @@ public class Manager extends User {
     public Manager(int userID) {
         super(userID);
     }
-
+    // Went through and changed all method access to private since they are only called within the class
     // Generates a random 9-digit provider/member
-    public int randomDigitsID() {
+    private int randomDigitsID() {
         boolean isValidID;
         int newMemberID;
         /*
@@ -32,7 +32,7 @@ public class Manager extends User {
      *      2. If the entered ID isn't in the database, verify will be set to "invalid". This means
      *         that the ID is not currently in use. idIDTaken returns true to signify it is not taken
      */
-    public boolean isIDTaken(int id) {
+    private boolean isIDTaken(int id) {
         String verify = DataAccess.userVerification(id);
         return verify.equals("invalid");                //CHANGED FROM verify.equals("invalid")? true:false; (redundant)
     }
@@ -42,7 +42,7 @@ public class Manager extends User {
      * is... if we just use isIDTaken(id) for the scan it searches ALL people in the database
      * including managers/providers and we don't want to suspend or unsuspend them.
      **/
-    public boolean isValidMember(int memberID) {
+    private boolean isValidMember(int memberID) {
         String verify = DataAccess.userVerification(memberID);
         if (verify.equals("member") || verify.equals("suspended"))
             return true;
@@ -50,7 +50,7 @@ public class Manager extends User {
     }
 
     // Prompts the manager for basic organization information before adding to the database
-    public boolean addOrganization(String user) {
+    private boolean addOrganization(String user) {
         // Declare organization info variables
         String tempName, tempAddress, tempCity, tempState;
         int newID, tempZip;
@@ -79,7 +79,7 @@ public class Manager extends User {
      * This function removes a specific organization from the database. The argument passed
      * in is either "member" or "provider" dependant on the menu the user chose to enter.
      */
-    public boolean removeOrganization(String user) {
+    private boolean removeOrganization(String user) {
         // Prompt the manager for the ID number for the organization they would like to remove
         int userToRemove;                 // Holds the ID number for the provider or member to be removed
         boolean valid;              // Holds the bool value for if the ID is in use or not
@@ -105,7 +105,7 @@ public class Manager extends User {
      * This function updates a specific organizations information. The argument passed in
      * is either "member" or "provider" dependant on the menu that user chose to enter.
      */
-    public boolean updateOrganization(String user) {
+    private boolean updateOrganization(String user) {
         // Prompt manager for ID of organization they would like to update
         int organizationID;
         boolean valid;
@@ -139,7 +139,7 @@ public class Manager extends User {
     }
 
     // Lets a manager suspend or unsuspend a member in the database
-    public boolean changeMemberStanding() {
+    private boolean changeMemberStanding() {
         // Verify whether the member exists in the database
         int member;
         do {
@@ -167,7 +167,7 @@ public class Manager extends User {
     }
 
     // Displays all of the manager menu options to keep the run function shorter and sweeter
-    public int menuPrompt() {
+    private int menuPrompt() {
         int menuChoice = 0; // it will hold the value of the user input
         do {
             // Print menu options to the screen
@@ -194,7 +194,7 @@ public class Manager extends User {
      * @param user the user the manager will edit(Provider or Member)
      * @return the function will return the option chosen by the manger
      */
-    public int editSubmenu(String user){
+    private int editSubmenu(String user){
         int menuChoice = 0; // it will hold the value of the user input
         do {
             // Print menu options to the screen
@@ -216,7 +216,7 @@ public class Manager extends User {
     }
 
     //This function will control actions in the submenu
-    public void submenuRun(String user) {
+    private void submenuRun(String user) {
 
         int menuChoice = 0;
         do {         // Loop to test input against valid choices
