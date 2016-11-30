@@ -26,39 +26,4 @@ public class ManagerTest {
         assertEquals(ChocAn.isValidMember(638287304), ChocAn.isValidMember(200630841));
     }
 
-    @Test
-    public void removeOrganization() throws Exception {
-
-    }
-
-    @Test
-    public void updateOrganization() throws Exception {
-
-    }
-
-    @Test
-    public void changeMemberStanding() throws Exception {
-
-    }
-
-    @Test
-    public void menuPrompt() throws Exception {
-
-    }
-
-    @Test
-    public void editSubmenu() throws Exception {
-
-    }
-
-    @Test
-    public void submenuRun() throws Exception {
-
-    }
-
-    @Test
-    public void run() throws Exception {
-
-    }
-
 }
