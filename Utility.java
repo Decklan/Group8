@@ -1,14 +1,15 @@
-/**
- * This file (Utility.java) includes the implementation
- * of the Utility class. This class constructs a Scanner
- * object, so other classes can derive from it to
- * avoid creating and recreating this object throughout
- * the program.  Furthermore, the Utility class will hold
- * any of the input validation functions that may be used
- * frequently throughout the program
- *
- * Created by MMC on 11/11/16.
- */
+-/**		
+ - * This file (Utility.java) includes the implementation		
+ - * of the Utility class. This class constructs a Scanner		
+ - * object, so other classes can derive from it to		
+ - * avoid creating and recreating this object throughout		
+ - * the program.  Furthermore, the Utility class will hold		
+ - * any of the input validation functions that may be used		
+ - * frequently throughout the program		
+ - *		
+ - * Created by MMC on 11/11/16.		
+ - */		
+ -
 
 import java.awt.*;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ import java.util.Scanner;
 public class Utility {
 
 //Fields
-
+    
     protected Scanner input;    //Create new scanner object
 
 
