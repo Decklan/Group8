@@ -268,11 +268,16 @@ public class DataAccess{
     }
 
     // MIGHT NEED TO CHANGE THIS TO ONLY GRAB PROVIDER NAME, SERVICE DATE, SERVICE NAME (ALL THATS REQUIRED)
-    public List<ServiceReport> getServiceReport(int memberId){
+    public List<ServiceReport> getServiceReport(int memberId,String reportType){
 
         String query = "SELECT r.provideddate, r.providerid,  p.name as ProviderName, o.name, r.memberid, r.serviceid, pd.fee, r.comment,pd.name as ServiceName "+
                 "FROM organization o JOIN report r ON o.id = r.memberid "+
-                "JOIN provider_directory pd ON r.serviceid = pd.id INNER JOIN (SELECT * from organization WHERE status ='provider') p on p.id = r.providerid WHERE r.memberid = ?";
+                "JOIN provider_directory pd ON r.serviceid = pd.id INNER JOIN (SELECT * from organization WHERE status ='provider') p on p.id = r.providerid "+
+                "WHERE ";
+        if (reportType == "provider")
+            query += "r.providerid = ?";
+       else
+            query += "r.memberid = ?";
 
        List<ServiceReport> services = new ArrayList<>();
 
@@ -301,7 +306,7 @@ public class DataAccess{
     }
 
     // Function to export organization to a file
-    public boolean exportOrganizationToFile() {
+    public boolean exportMembersReportToFile() {
 
         List<Organization> memberRegistry = getOrganizationList("member");
         if (memberRegistry == null)                     // If the memberRegistry doesn't get set appropriately
@@ -309,11 +314,11 @@ public class DataAccess{
 
         try {
         String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
-        File dir = new File(System.getProperty("user.dir"),"ChocAn Reports");
+        File dir = new File(System.getProperty("user.dir"),"Member Reports");
         if (!dir.exists()) // If the file doesn't exist in that path create it
                 dir.mkdir();
         for (Organization org : memberRegistry) {          // For each member in the list perform these actions
-            List<ServiceReport> memberReports = getServiceReport(org.Id);       // Retrieve the services that member received
+            List<ServiceReport> memberReports = getServiceReport(org.Id,"member");       // Retrieve the services that member received
             if (!memberReports.isEmpty()){
                     String fileName = org.Name + "(" + date + ")";                      // Create the file name
                 File file = new File(dir.getPath(), fileName + ".txt");  // Establish the path to the file
@@ -330,7 +335,7 @@ public class DataAccess{
                 writer.write("Member address: " + org.Street + ", " + org.City + ", " + org.State + " " + org.ZipCode);
                 writer.newLine();
                 writer.newLine();
-                writer.write("Services: ");
+                writer.write("Services received: ");
                 writer.newLine();
                 // Information that needs to be written for each service report according to design requirements
                 for (ServiceReport report : memberReports) {
@@ -339,6 +344,68 @@ public class DataAccess{
                     writer.write("Provider name: " + report.ProviderName);
                     writer.newLine();
                     writer.write("Service name: " + report.ServiceName);
+                    writer.newLine();
+                    writer.write("--------------------------------------------------------");
+                    writer.newLine();
+                    writer.newLine();
+                }
+                writer.flush();
+            }
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean exportProviderServicesToFile() {
+
+        List<Organization> providers = getOrganizationList("provider");
+        if (providers == null)                     // If the providers doesn't get set appropriately
+            return false;
+
+        try {
+        String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
+        File dir = new File(System.getProperty("user.dir"),"Provider Reports");
+        if (!dir.exists()) // If the file doesn't exist in that path create it
+                dir.mkdir();
+        for (Organization org : providers) {          // For each member in the list perform these actions
+            List<ServiceReport> providedServices = getServiceReport(org.Id,"provider");       // Retrieve the services that member received
+            float totalFees = 0;
+            for(ServiceReport service : providedServices) {
+                totalFees += service.Fee;
+            }
+            if (!providedServices.isEmpty()){
+                    String fileName = org.Name + "(" + date + ")";                      // Create the file name
+                File file = new File(dir.getPath(), fileName + ".txt");  // Establish the path to the file
+
+                if (!file.exists()) // If the file doesn't exist in that path create it
+                    file.createNewFile();
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file)); // Allocate the BufferedWriter to write the information to the file
+                // Information that only needs to be written to the file ONCE according to design requirements
+                writer.write("Provider name: " + org.Name);
+                writer.newLine();
+                writer.write("Provider number: " + org.Id);
+                writer.newLine();
+                writer.write("Provider address: " + org.Street + ", " + org.City + ", " + org.State + " " + org.ZipCode);
+                writer.newLine();
+                writer.write("# of consultations: " + providedServices.size());
+                writer.newLine();
+                writer.write("Total fees for current week: " + "$"+totalFees);
+                writer.newLine();
+                writer.newLine();
+                writer.write("Services Provided: ");
+                writer.newLine();
+                // Information that needs to be written for each service report according to design requirements
+                for (ServiceReport service : providedServices) {
+                    writer.write("Service date: " + service.ServiceDate.toString());
+                    writer.newLine();
+                    writer.write("Provider name: " + service.MemberId);
+                    writer.newLine();
+                    writer.write("Service code: " + service.SerivceID);
+                    writer.newLine();
+                    writer.write("Fee to pay: " + "$"+service.Fee);
                     writer.newLine();
                     writer.write("--------------------------------------------------------");
                     writer.newLine();
