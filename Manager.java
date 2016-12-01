@@ -177,14 +177,15 @@ public class Manager extends User {
             System.out.println("##\t (2) Edit Providers                                  ##");
             System.out.println("##\t (3) Suspend/Unsuspend Member                        ##");
             System.out.println("##\t (4) Generate Weekly Member Emails                   ##"); // CAN CHANGE TO MORE APPROPRIATE NAME IF NEED BE
-            System.out.println("##\t (5) Quit                                            ##"); // We need such option
+            System.out.println("##\t (5) Generate Weekly Provider Emails                 ##");
+            System.out.println("##\t (6) Quit                                            ##"); // We need such option
             System.out.println("###########################################################");
-            menuChoice = readInt("Enter a menu choice (1-5): ","");
-            if(menuChoice <= 0 || menuChoice > 5) {
+            menuChoice = readInt("Enter a menu choice (1-6): ","");
+            if(menuChoice <= 0 || menuChoice > 6) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
             }
-        } while (menuChoice <= 0 || menuChoice > 5);
+        } while (menuChoice <= 0 || menuChoice > 6);
         return menuChoice;
     }
 
@@ -203,15 +204,16 @@ public class Manager extends User {
             System.out.println("\t (1) Add "+ user);
             System.out.println("\t (2) Remove "+ user);
             System.out.println("\t (3) Update "+ user);
-            System.out.println("\t (4) Return"); // We need such option
+            System.out.println("\t (4) Display and export provider report"); // We need such option
+            System.out.println("\t (5) Return"); // We need such option
             System.out.println("###########################################################");
             //System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = readInt("Enter your choice (1-4): ","");
-            if(menuChoice <= 0 || menuChoice > 4) {
+            menuChoice = readInt("Enter your choice (1-5): ","");
+            if(menuChoice <= 0 || menuChoice > 5) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
             }
-        } while (menuChoice <= 0 || menuChoice > 4);
+        } while (menuChoice <= 0 || menuChoice > 5);
         return menuChoice;
     }
 
@@ -251,7 +253,17 @@ public class Manager extends User {
                 waitForEnter();
                 clearScreen();
             }
-        } while (menuChoice != 4);
+            else if (menuChoice == 4) {
+                boolean reportGen = false;
+                    reportGen =  data.exportProviderServicesToFile();
+                if (reportGen)
+                    successMessage("Successfully exported.");
+                else
+                    errorMessage("There was a problem exporting.");
+                waitForEnter();
+                clearScreen();
+            }
+        } while (menuChoice != 5);
         return; // Return to the main menu
     }
 
@@ -283,15 +295,25 @@ public class Manager extends User {
             }
             // ADDED THIS SECTION TO THE MENU FOR RUNNING DATAACCESS FUNCTION
             else if (menuChoice == 4) {
-                boolean reportGen = data.exportOrganizationToFile();
+                boolean reportGen = data.exportMembersReportToFile();
                 if (reportGen)
-                    successMessage("Successfully exported members.");
+                    successMessage("Successfully generated reports");
                 else
-                    errorMessage("There was a problem exporting members.");
+                    errorMessage("There was a problem generating reports.");
                 waitForEnter();
                 clearScreen();
             }
-        } while (menuChoice != 5);
+            else if (menuChoice == 5) {
+                boolean reportGen = data.exportProviderServicesToFile();
+                if (reportGen)
+                    successMessage("Successfully generated reports");
+                else
+                    errorMessage("There was a problem generating reports");
+                waitForEnter();
+                clearScreen();
+            }
+
+        } while (menuChoice != 6);
 
     }
 
