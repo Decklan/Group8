@@ -23,7 +23,6 @@ public class Provider extends User {
         } else {
             warningMessage("Provider Directory Is Empty");
         }
-
     }
 
 
@@ -46,7 +45,7 @@ public class Provider extends User {
         } else if (memberType.equals("suspended")) {
             clearScreen();
             successMessage("Member suspended.");
-            return false;
+            return true;
         }
         clearScreen();
         errorMessage("Invalid member ID. Unable to verify member. Try Again.");
@@ -62,6 +61,7 @@ public class Provider extends User {
         Date currentDate = new Date(System.currentTimeMillis());
         int serviceID;
         int again;
+        int response;
 
         clearScreen();
         //Get membership ID number while checking if it's valid or not.
@@ -70,16 +70,26 @@ public class Provider extends User {
         }while(!memberVerification(memberID));
 
         //Get service ID number while checking if it's valid or not.
+
+        providerDirectoryDisplay();             //display provider directory to Provider
         serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         while (!data.serviceVerification(serviceID)) {
             errorMessage("Invalid service ID!");
             serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         }
+        //Ask provider if this service is correct
 
         clearScreen();
-        //Get comment from provider about service
-        String comment = readString("Enter a comment, up to 100 characters: ");
-        data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
+        //Ask Provider if they would like to enter a comment
+        do {
+            response = checkAnswer("Would you like to enter a comment? [y/n]:  ");
+        }while(response == 2);
+
+        //if user has selected to add a comment
+        if (response == 1) {
+            String comment = readString("Enter a comment, up to 100 characters: ");
+            data.createBill(memberID, userID, serviceID, 1, currentDate, comment);
+        }
 
         clearScreen();
         successMessage("Bill successfuly saved.");
