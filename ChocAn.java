@@ -7,7 +7,6 @@
 */
 
 public class ChocAn extends Utility {
-
 	//Fields
 	protected String checkUserStatus;	//Holds the user status while their status remains unverified by the Database.
 	protected String userStatus;    	//Holds the user status verified by the userVerification method (DataAccess).
@@ -15,10 +14,8 @@ public class ChocAn extends Utility {
 	protected int userIDisInteger;		//Holds the 9 digit user ID number entered by the user.
 	protected User endUser;         	//Reference to the abstract base class
 
-
 	//Constructor
 	public ChocAn() {
-
 		//Field Initialization
 		checkUserStatus = null;
 		userStatus = null;
@@ -32,10 +29,8 @@ public class ChocAn extends Utility {
 	 * Manager or Provider
 	 */
 	public String userLogin() {
-
 			//Boolean for loop control (true: continue false: break)
 			int again;
-
 			do {
 				System.out.print("Please Enter Your ID Number:  ");
 
@@ -46,45 +41,31 @@ public class ChocAn extends Utility {
 				if ((inputUserID.length() < 10) && testIntegerInput(inputUserID)) {
 					userIDisInteger = Integer.parseInt(inputUserID);
 
-					/*Testing output
-					System.out.println(DataAccess.userVerification(userIDisInteger));
-                    */
-
 					checkUserStatus = DataAccess.userVerification(userIDisInteger);
-
-						/* If the number is an integer & the user enters an invalid ID number or by chance
-						 * enters a member's ID number, they must be denied by the system and informed that
-						 * the number they have entered will not gain them access to the system.
-						 */
+					/* If the number is an integer & the user enters an invalid ID number or by chance
+				    * enters a member's ID number, they must be denied by the system and informed that
+			       	* the number they have entered will not gain them access to the system.
+					*/
 					if(checkUserStatus.equalsIgnoreCase("invalid") || checkUserStatus.equalsIgnoreCase("suspended")
                         || checkUserStatus.equalsIgnoreCase("member")) {
 						System.out.println("This is not a registered access ID in the system.");
 						checkUserStatus = "invalid";
 					}
-
-				}
-
-				else {
+				} else {
 					checkUserStatus = "invalid";
 					System.out.println("This is not a registered access ID in the system.");
 				}
 
 				//If the user's input is invalid, allow them to enter their information again
 				if (checkUserStatus.equalsIgnoreCase("invalid")) {
-
 					do {
 						//System.out.print("Would you like to try again? [y/n]:  ");
 						again = checkAnswer("Would you like to try again? [y/n]:  ");
 					}while(again == 2);
-
-
-				}
-				else{
+				} else {
 					again = 0;
 				}
-
 				}while(again == 1);
-
 			return checkUserStatus;
 	}
 
@@ -94,53 +75,37 @@ public class ChocAn extends Utility {
 	 * OUTPUT: True or False
 	 */
 	public void userDefineRole(){
-
 		//Grab that first character to inform the switch statement
 		char statusInformSwitch = userStatus.charAt(0);
 
 		//Handles the user's role
 		switch(statusInformSwitch) {
-
 			//If the user is a manager
 			case 'm':
-
 				endUser = new Manager(userIDisInteger);
 				endUser.run();
 				break;
-
 			//If the user is a provider
 			case 'p':
-
 				endUser = new Provider(userIDisInteger);
 				endUser.run();
 				break;
-
 			//If they're something else at this point, it's time to go buddy
 			default:
 				System.out.println("Level of authorization could not be verified.\nForcing Software Exit.");
 				break;
 		}
-
 		System.out.println("Thank You for using ChocAn.\nGoodbye.");
-
 	}
 
 	// Run method for the program
 	public void runChocAn (){
+    	System.out.println("++++ WELCOME ++++\n\n");
 
-    System.out.println("++++ WELCOME ++++\n\n");
+    	//Prompt the User for their password
+		userStatus = userLogin();
 
-    //Prompt the User for their password
-	userStatus = userLogin();
-
-    /*Test return value for userStatus
-    System.out.println(userStatus);
-	*/
-
-	//Define the user's role and proceed to the appropriate menu.
-	userDefineRole();
-
-
-
+		//Define the user's role and proceed to the appropriate menu.
+		userDefineRole();
 	}
 }

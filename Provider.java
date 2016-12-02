@@ -12,8 +12,8 @@ public class Provider extends User {
         super(userID);
     }
 
-    //This method displays the Provider Directory.
-    ////The directory stores service names, service codes, and service fees.		
+    // This method displays the Provider Directory.
+    // The directory stores service names, service codes, and service fees.
     public void providerDirectoryDisplay() {
         String providerDirectory = data.directoryLookUp();
 
@@ -56,7 +56,6 @@ public class Provider extends User {
      * Input: None
      * Output: boolean
      * Description: Prompts for information required in bill and passes data as args for data access.*/
-
     public boolean createBill() {
         Date currentDate = new Date(System.currentTimeMillis());
         int serviceID;
@@ -69,14 +68,13 @@ public class Provider extends User {
         }while(!memberVerification(memberID));
 
         //Get service ID number while checking if it's valid or not.
-
         providerDirectoryDisplay();             //display provider directory to Provider
         serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         while (!data.serviceVerification(serviceID)) {
             errorMessage("Invalid service ID!");
             serviceID = readInt("Enter the service id: ","Please enter a numerical id");
         }
-        //Ask provider if this service is correct
+        // Ask provider if this service is correct
 
         clearScreen();
         //Ask Provider if they would like to enter a comment
@@ -95,7 +93,7 @@ public class Provider extends User {
         return true;
     }
 
-
+    // Output the provider menu and get desired action
     public int menuDisplay() {
         int MenuChoice = 0;     //stores user's response when making Menu selections
 
@@ -122,11 +120,7 @@ public class Provider extends User {
         return MenuChoice;
     }
 
-
-
-
-
-    /*********  Driver  **********/
+    // Acts as the menu for a provider
     public void run() {
         int Providerchoice;
         do {

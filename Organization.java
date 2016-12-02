@@ -1,7 +1,7 @@
-// Holds member information for writing to external files
-public class Organization extends Utility {
+// Holds member information for writing to external files as part of the email requirement
+public class Organization {
     /*
-     * These variables make up all the relevant information required to export
+     * These variables make up most of the relevant information required to export
      * to the external file for the email requirement
      */
     public int Id;
