@@ -270,14 +270,11 @@ public class DataAccess{
     // MIGHT NEED TO CHANGE THIS TO ONLY GRAB PROVIDER NAME, SERVICE DATE, SERVICE NAME (ALL THATS REQUIRED)
     public List<ServiceReport> getServiceReport(int memberId,String reportType){
 
-        String query = "SELECT r.provideddate, r.providerid,  p.name as ProviderName, o.name, r.memberid, r.serviceid, pd.fee, r.comment,pd.name as ServiceName "+
-                "FROM organization o JOIN report r ON o.id = r.memberid "+
-                "JOIN provider_directory pd ON r.serviceid = pd.id INNER JOIN (SELECT * from organization WHERE status ='provider') p on p.id = r.providerid "+
-                "WHERE ";
+        String query = "SELECT * FROM reportview1 WHERE ";
         if (reportType == "provider")
-            query += "r.providerid = ?";
+            query += "providerid = ?";
        else
-            query += "r.memberid = ?";
+            query += "memberid = ?";
 
        List<ServiceReport> services = new ArrayList<>();
 
@@ -446,20 +443,4 @@ public class DataAccess{
         }
         return false;
     }
-
-    // We may not need this function
-    public boolean deleteOrganization(int id, String status) {
-        String query = "DELETE FROM organization WHERE id= ? and status=?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id); 
-            preparedStatement.setString(2, status); 
-            preparedStatement.executeUpdate();
-            return true;
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 }
