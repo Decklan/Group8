@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
-
+/*
+ * This class contains all the implementations of DataAccess methods for communicating with
+ * the database.
+ */
 public class DataAccess{
-
     private static Connection connection = null;
 
+    // Constructor
     DataAccess() {
         connectDatabase();
     }
@@ -73,6 +76,7 @@ public class DataAccess{
         return false;
     }
 
+    // Changes a member's status to suspended in the database
     public boolean suspendMember(int memberID) {
         String query = "UPDATE organization set status = 'suspended' where id= ? and status = 'member'";
         try {
@@ -87,6 +91,7 @@ public class DataAccess{
         return false;
     }
 
+    // Changes a member's standing from suspended back to member
     public boolean unsuspendMember(int memberID) {
         String query = "UPDATE organization set status = 'member' where id= ? and status = 'suspended'";
         try {
@@ -128,6 +133,7 @@ public class DataAccess{
         return false;
     }
 
+    // Updates an organizations information
     public boolean updateOrganization(int userID, String name, String street, 
                                    String city, String state, int zipcode, String status) {
         String query = "UPDATE organization SET name = ?, street = ?, city = ?, state = ?, zipcode = ?, status = ?"
@@ -196,6 +202,7 @@ public class DataAccess{
         return directory.toString();
 	}
 
+	// Query database and return organization information for each provider or member in the database
     public List<Organization> getOrganizationList(String user)
     {
         String query = "SELECT * FROM organization WHERE status = ?";
@@ -222,7 +229,7 @@ public class DataAccess{
         return organizations;
     }
 	
-    //This function remove a member or provider
+    // This function removes a member or provider from the database
     public boolean removeOrganization(int memberID) {
         String query = "delete from organization WHERE  id = ?";
         try {
@@ -237,7 +244,7 @@ public class DataAccess{
         return false;
     }
 
-    //query that will return member bill as a string
+    // Query that will return member bill as a string
     public String getMemberBill(int memberID) {
         String query = "SELECT r.provideddate, r.providerid, o.name, r.memberid, r.serviceid, pd.fee, r.comment "+
                         "FROM organization o JOIN report r ON o.id = r.memberid "+
@@ -267,16 +274,16 @@ public class DataAccess{
         return directory.toString();
     }
 
-    // MIGHT NEED TO CHANGE THIS TO ONLY GRAB PROVIDER NAME, SERVICE DATE, SERVICE NAME (ALL THATS REQUIRED)
+    // Query the database and get a list of all service reports related to a provider or member
     public List<ServiceReport> getServiceReport(int memberId,String reportType){
-
         String query = "SELECT * FROM reportview1 WHERE ";
         if (reportType == "provider")
             query += "providerid = ?";
        else
             query += "memberid = ?";
 
-       List<ServiceReport> services = new ArrayList<>();
+        // Instantiate a list of type ServiceReport
+        List<ServiceReport> services = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -302,7 +309,7 @@ public class DataAccess{
         return services;
     }
 
-    // Function to export organization to a file
+    // Function to export members to a file along with their service reports
     public boolean exportMembersReportToFile() {
 
         List<Organization> memberRegistry = getOrganizationList("member");
@@ -355,6 +362,7 @@ public class DataAccess{
         return true;
     }
 
+    // Function to export providers to a file along with their service report information
     public boolean exportProviderServicesToFile() {
 
         List<Organization> providers = getOrganizationList("provider");
@@ -417,6 +425,7 @@ public class DataAccess{
         return true;
     }
 
+    // Function to remove all reports in the database related to a given memberID
     public boolean deleteAllMemberReport(int memberID) {
         String query = "DELETE FROM report WHERE memberID = ?";
 
@@ -431,6 +440,7 @@ public class DataAccess{
         return false;
     }
 
+    // Function to remove all reports in the database related to a given providerID
     public boolean deleteAllProviderReport(int providerID) {
         String query = "DELETE FROM report WHERE providerID = ?";
         try {

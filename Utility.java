@@ -12,31 +12,22 @@
 
 import java.util.Scanner;
 
-
-
-
 public class Utility {
-
-//Fields
-    
+    // Fields
     protected Scanner input;    //Create new scanner object
 
-
-//Constructor
-
+    // Constructor
     public Utility(){
-
-    //Declare an object of type Scanner
+        // Declare an object of type Scanner
         input = new Scanner(System.in);
-
     }
-    public String readString(String prompt){
 
+    // Function to output prompt argument and prompt for string input
+    public String readString(String prompt){
         String temp;
         System.out.print(prompt); //prompt the user 
         temp = input.nextLine();  //Read the string from buffer
         return temp;
-
     }
 
     /**
@@ -60,43 +51,28 @@ public class Utility {
         return tempInt;
     }
 
-
     /* Performs a check on the user's input to see if
      * they answered some form of "yes."
      * INPUT: NONE
      * OUTPUT: 0 for no, 1 for yes, 2 for an invalid response
      */
     public int checkAnswer(String prompt) {
-
-
-        System.out.print(prompt);
-
+        System.out.print(prompt);    // Prompt the user
         String temp = input.next();  // Catches the user's input
         input.nextLine();            // Consumes newline character
 
         int responseFlag;
-
         if (temp.equalsIgnoreCase("no") || temp.equalsIgnoreCase("n")) {
             responseFlag = 0;
         }
-
         else if (temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("y")) {
             responseFlag = 1;
-        }
-
-         else {
+        } else {
             System.out.println("Not a valid response.");
             responseFlag = 2;
         }
-
         return responseFlag;
-
-        /*  Error check not robust enough
-         * Returns the value of the string check (true or false).
-         * return (temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("y"));
-         */
     }
-
 
     /* Performs a check on the user's input to see if
      * they entered an integer when prompted to do so.
@@ -104,21 +80,15 @@ public class Utility {
      * OUTPUT: True or False
      */
    public boolean testIntegerInput(String userInput){
-
        boolean validInteger = false;
-
        try{
            Integer.parseInt(userInput);
-
            //If successful, input is an integer
             validInteger = true;
-       }
-       catch (NumberFormatException ex){
+       } catch (NumberFormatException ex){
            System.out.println("Invalid Input. Not an numerical value.");
        }
-
        return validInteger;
-
    }
     
     /**
@@ -147,6 +117,5 @@ public class Utility {
     public void successMessage(String message){
                  System.out.println(" \033[0;32m "+ message +"\033[0m");
     }
-
 
 }

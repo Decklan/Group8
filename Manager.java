@@ -1,14 +1,14 @@
 import java.util.Random;
 
 /**
- * This class contains all the Manager method should contain
+ * This class contains all the methods related to a ChocAn Manager
  */
 public class Manager extends User {
 
     public Manager(int userID) {
         super(userID);
     }
-    // Went through and changed all method access to private since they are only called within the class
+
     // Generates a random 9-digit provider/member
     private int randomDigitsID() {
         boolean isValidID;
@@ -54,13 +54,14 @@ public class Manager extends User {
         // Declare organization info variables
         String tempName, tempAddress, tempCity, tempState;
         int newID, tempZip;
+
         // Loop while the information entered isn't correct
         do {
             tempName = readString(user + " name: ");          // Get the organization name
             tempAddress = readString(user + " address: ");    // Get the organization address
             tempCity = readString(user + " city: ");          // Get the organization city
-            tempState = readString(user + " state: ");       // Get the organization state
-            newID = randomDigitsID();                        // Generate an ID number for the organization
+            tempState = readString(user + " state: ");        // Get the organization state
+            newID = randomDigitsID();                         // Generate an ID number for the organization
             tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code."); // Get the organization zip code
 
             clearScreen();
@@ -80,12 +81,14 @@ public class Manager extends User {
      * in is either "member" or "provider" dependant on the menu the user chose to enter.
      */
     private boolean removeOrganization(String user) {
-        // Prompt the manager for the ID number for the organization they would like to remove
         int userToRemove;           // Holds the ID number for the provider or member to be removed
         boolean valid;              // Holds the bool value for if the ID is in use or not
+
         // Do the ID verification while the ID entered is not valid
         do {
+            // Prompt the manager for the ID number for the organization they would like to remove
             userToRemove = readInt("Please enter the " + user + " ID for the " + user + " you would like to remove: ","Please enter a numerical Id" );
+            // Check if the ID entered is a valid ID in the database
             valid = isIDTaken(userToRemove);
             // If the ID entered isn't in the database
             if (valid)
@@ -94,10 +97,10 @@ public class Manager extends User {
 
         // Holds the bool value from the deleteOrganization function to signify success or failure of removal
         if (user.equals("member"))
-            data.deleteAllMemberReport(userToRemove);
+            data.deleteAllMemberReport(userToRemove);               // Remove member reports if ID is a member ID
         else
-            data.deleteAllProviderReport(userToRemove);
-        boolean delete = data.removeOrganization(userToRemove);
+            data.deleteAllProviderReport(userToRemove);             // Remove provider reports if ID is a provider ID
+        boolean delete = data.removeOrganization(userToRemove);     // Remove the actual member/provider
         return delete;
     }
 
@@ -123,7 +126,7 @@ public class Manager extends User {
             tempName = readString(user + " name: ");          // Get the organization name
             tempAddress = readString(user + " address: ");    // Get the organization address
             tempCity = readString(user + " city: ");          // Get the organization city
-            tempState = readString(user + " state: ");       // Get the organization state
+            tempState = readString(user + " state: ");        // Get the organization state
             tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");  // Get the organization zip code
 
             clearScreen();
@@ -217,7 +220,6 @@ public class Manager extends User {
 
     //This function will control actions in the submenu
     private void submenuRun(String user) {
-
         int menuChoice = 0;
         do {         // Loop to test input against valid choices
             menuChoice = editSubmenu(user); // Display the menu options to the screen and get the selected option
@@ -261,18 +263,17 @@ public class Manager extends User {
         // Integer to hold manager's menu choice
         int menuChoice = 0;
 
-        do {         // Loop to test input against valid choices
+        // Loop to test input against valid choices
+        do {
             menuChoice = menuPrompt(); // Display the menu options to the screen and get the selected option
             clearScreen();
 
             //If cases handle running the appropriate method based on manager choice
             if (menuChoice == 1) {
                 submenuRun("member");
-            }
-            else if (menuChoice == 2) {
+            } else if (menuChoice == 2) {
                 submenuRun("provider");
-            }
-            else if (menuChoice == 3){
+            } else if (menuChoice == 3){
                 boolean change = changeMemberStanding();
                 if (change)
                     successMessage("Member standing successfully changed. Enter to continue.");
@@ -280,8 +281,7 @@ public class Manager extends User {
                     errorMessage("There was a problem changing the member's standing.");
                 waitForEnter();
                 clearScreen();
-            }
-            else if (menuChoice == 4) {
+            } else if (menuChoice == 4) {
                 boolean reportGen = data.exportMembersReportToFile();
                 if (reportGen)
                     successMessage("Successfully generated reports");
@@ -289,8 +289,7 @@ public class Manager extends User {
                     errorMessage("There was a problem generating reports.");
                 waitForEnter();
                 clearScreen();
-            }
-            else if (menuChoice == 5) {
+            } else if (menuChoice == 5) {
                 boolean reportGen = data.exportProviderServicesToFile();
                 if (reportGen)
                     successMessage("Successfully generated reports");
@@ -299,9 +298,6 @@ public class Manager extends User {
                 waitForEnter();
                 clearScreen();
             }
-
         } while (menuChoice != 6);
-
     }
-
 }
