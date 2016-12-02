@@ -32,7 +32,7 @@ public class Manager extends User {
      *      2. If the entered ID isn't in the database, verify will be set to "invalid". This means
      *         that the ID is not currently in use. idIDTaken returns true to signify it is not taken
      */
-    private boolean isIDTaken(int id) {
+    protected boolean isIDTaken(int id) {
         String verify = DataAccess.userVerification(id);
         return verify.equals("invalid");
     }
@@ -42,7 +42,7 @@ public class Manager extends User {
      * is... if we just use isIDTaken(id) for the scan it searches ALL people in the database
      * including managers/providers and we don't want to suspend or unsuspend them.
      **/
-    private boolean isValidMember(int memberID) {
+    protected boolean isValidMember(int memberID) {
         String verify = DataAccess.userVerification(memberID);
         if (verify.equals("member") || verify.equals("suspended"))
             return true;
