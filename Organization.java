@@ -1,7 +1,3 @@
-import java.io.*;
-import java.util.Date;
-import java.util.List;
-
 // Holds member information for writing to external files
 public class Organization extends Utility {
     /*

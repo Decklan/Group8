@@ -34,7 +34,7 @@ public class Manager extends User {
      */
     private boolean isIDTaken(int id) {
         String verify = DataAccess.userVerification(id);
-        return verify.equals("invalid");                //CHANGED FROM verify.equals("invalid")? true:false; (redundant)
+        return verify.equals("invalid");
     }
 
     /** This function scans the database for a valid MEMBER (for suspension purposes)
@@ -61,7 +61,7 @@ public class Manager extends User {
             tempCity = readString(user + " city: ");          // Get the organization city
             tempState = readString(user + " state: ");       // Get the organization state
             newID = randomDigitsID();                        // Generate an ID number for the organization
-            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");         // Get the organization zip code
+            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code."); // Get the organization zip code
 
             clearScreen();
             System.out.println(user + " name: " + tempName);
@@ -81,7 +81,7 @@ public class Manager extends User {
      */
     private boolean removeOrganization(String user) {
         // Prompt the manager for the ID number for the organization they would like to remove
-        int userToRemove;                 // Holds the ID number for the provider or member to be removed
+        int userToRemove;           // Holds the ID number for the provider or member to be removed
         boolean valid;              // Holds the bool value for if the ID is in use or not
         // Do the ID verification while the ID entered is not valid
         do {
@@ -124,7 +124,7 @@ public class Manager extends User {
             tempAddress = readString(user + " address: ");    // Get the organization address
             tempCity = readString(user + " city: ");          // Get the organization city
             tempState = readString(user + " state: ");       // Get the organization state
-            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");         // Get the organization zip code
+            tempZip = readInt(user + " zip code: ", "Please enter a numerical zip code.");  // Get the organization zip code
 
             clearScreen();
             System.out.println(user + " name: " + tempName);
@@ -176,9 +176,9 @@ public class Manager extends User {
             System.out.println("##\t (1) Edit Members                                    ##");
             System.out.println("##\t (2) Edit Providers                                  ##");
             System.out.println("##\t (3) Suspend/Unsuspend Member                        ##");
-            System.out.println("##\t (4) Generate Weekly Member Emails                   ##"); // CAN CHANGE TO MORE APPROPRIATE NAME IF NEED BE
+            System.out.println("##\t (4) Generate Weekly Member Emails                   ##");
             System.out.println("##\t (5) Generate Weekly Provider Emails                 ##");
-            System.out.println("##\t (6) Quit                                            ##"); // We need such option
+            System.out.println("##\t (6) Quit                                            ##");
             System.out.println("###########################################################");
             menuChoice = readInt("Enter a menu choice (1-6): ","");
             if(menuChoice <= 0 || menuChoice > 6) {
@@ -204,16 +204,14 @@ public class Manager extends User {
             System.out.println("\t (1) Add "+ user);
             System.out.println("\t (2) Remove "+ user);
             System.out.println("\t (3) Update "+ user);
-            System.out.println("\t (4) Display and export provider report"); // We need such option
-            System.out.println("\t (5) Return"); // We need such option
+            System.out.println("\t (4) Return"); // We need such option
             System.out.println("###########################################################");
-            //System.out.print("Enter your choice (1-4): "); // Prompt manager for a choice
-            menuChoice = readInt("Enter your choice (1-5): ","");
-            if(menuChoice <= 0 || menuChoice > 5) {
+            menuChoice = readInt("Enter your choice (1-4): ","");
+            if(menuChoice <= 0 || menuChoice > 4) {
                 clearScreen();
                 errorMessage("Please make a valid choice!");
             }
-        } while (menuChoice <= 0 || menuChoice > 5);
+        } while (menuChoice <= 0 || menuChoice > 4);
         return menuChoice;
     }
 
@@ -253,17 +251,7 @@ public class Manager extends User {
                 waitForEnter();
                 clearScreen();
             }
-            else if (menuChoice == 4) {
-                boolean reportGen = false;
-                    reportGen =  data.exportProviderServicesToFile();
-                if (reportGen)
-                    successMessage("Successfully exported.");
-                else
-                    errorMessage("There was a problem exporting.");
-                waitForEnter();
-                clearScreen();
-            }
-        } while (menuChoice != 5);
+        } while (menuChoice != 4);
         return; // Return to the main menu
     }
 
@@ -293,7 +281,6 @@ public class Manager extends User {
                 waitForEnter();
                 clearScreen();
             }
-            // ADDED THIS SECTION TO THE MENU FOR RUNNING DATAACCESS FUNCTION
             else if (menuChoice == 4) {
                 boolean reportGen = data.exportMembersReportToFile();
                 if (reportGen)
