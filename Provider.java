@@ -60,7 +60,6 @@ public class Provider extends User {
     public boolean createBill() {
         Date currentDate = new Date(System.currentTimeMillis());
         int serviceID;
-        int again;
         int response;
 
         clearScreen();
@@ -144,10 +143,7 @@ public class Provider extends User {
             if (Providerchoice == 3) {        //Provider choseto Display Provider directory
                 providerDirectoryDisplay();
             }
-            if (Providerchoice == 4){
-                return;
-            }
-        }while(Providerchoice != 0);
+        }while(Providerchoice != 4);
         return;
     }
 }

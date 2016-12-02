@@ -6,9 +6,6 @@
  * as well as the contract agreed upon by ChocAn.
 */
 
-
-
-
 public class ChocAn extends Utility {
 
 	//Fields
@@ -29,9 +26,6 @@ public class ChocAn extends Utility {
 		inputUserID = null;
 		userIDisInteger = 0;
 	}
-
-
-
 
 	/* Prompts the user to enter their ID number and calls on the
 	 * userVerification function to verify whether the user is a
@@ -131,11 +125,7 @@ public class ChocAn extends Utility {
 
 	}
 
-
-
-
-
-
+	// Run method for the program
 	public void runChocAn (){
 
     System.out.println("++++ WELCOME ++++\n\n");
@@ -151,60 +141,6 @@ public class ChocAn extends Utility {
 	userDefineRole();
 
 
-
-	}
-
-
-
-
-
-
-
-
-
-
-	public static void main(String[] argv){
-
-		/*Create new ChocAn client
-		ChocAn chocAnClient = new ChocAn();
-
-
-		chocAnClient.runChocAn();
-		*/	
-
-		/*Test login function
-		chocAnClient.loginTest();
-		*/
-
-
-
-
-
-
-
-
-
-		/*
-         TEST userverificaiton
-        System.out.println(DataAccess.userVerification(123213));
-        System.out.println(DataAccess.userVerification(768921693));
-        System.out.println(DataAccess.userVerification(587857871));
-        System.out.println(DataAccess.userVerification(454419772));
-        System.out.println(DataAccess.userVerification(433671813));
-		*/
-
-        /* TEST addingOrganization
-        DataAccess dataAccess = new DataAccess();
-        boolean a = dataAccess.addOrganization(274419773, "Mike Brown" , "3992 Highland Drive",
-                                   "Milwaukee", "WI", 53202, "member");
-        */
-
-        /* TEST Directory LOOK UP
-        DataAccess dataAccess = new DataAccess();
-        String directory = dataAccess.directoryLookUp();
-        System.out.println(directory);
-        */
-        
 
 	}
 }
